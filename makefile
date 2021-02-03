@@ -1,31 +1,8 @@
-#compile KNX library
-#OUT = libKNX_Library$(LIB_EXT)
-
-#SRC = strutil.c hash.c tree.c filestr.c console_io.c console.c \
-	win_console.c unix_console.c
-#DIRS := $(wildcard */.)
-#GARBAGE := $(foreach DIR, $(DIRS), $(DIR)/$(CLEAN_TEXT))
-
-#OBJ_FILES = $(SRC:.c=.o)
-#current_dir = $(shell pwd)
-
-#%.o : %.c
-#	$(CC) $(INCLUDES) $(COMMON) -c $<
-
-#$(EXPORT_PATH)$(OUT): $(OBJ_FILES)
-#	ar rcs $(EXPORT_PATH)$(OUT) $(OBJ_FILES)
-
-#.PHONY: clean
-#clean:
-#	rm -f $@ *.o
-
-
-#Render or configure program
 
 CC = g++
 CFLAGS = -std=c++14 -Wall -g
 LFLAGS = -lm -ldl -lpthread
-OUT = kasm
+OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
@@ -38,7 +15,7 @@ ifeq ($(shell uname), Linux)
 	PLATFORM = -D__LINUX
 	OSMODE = -DBITMODE=$(BITVRS)
 	EXPORT_PATH=./bin/
-	EXT=
+	EXT=.a
 	RUNPATH=./$(EXPEXPORT_PATHORT_PTH)$(OUT)$(EXT)
 	TERMLIB=-lncurses
 else
@@ -47,18 +24,17 @@ else
 	PLATFORM = -D__WINDOWS
 	OSMODE = -DBITMODE=$(BITVRS)
 	EXPORT_PATH=./bin/
-	EXT=.exe
+	EXT=.dll
 	RUNPATH=$(EXPORT_PATH)$(OUT)$(EXT)
 endif
+
+export EXT
 
 %.o : %.cpp
 	$(CC) -c $<
 
 $(RUNPATH): $(OBJ_FILES)
-	ar rcs $(EXPORT_PATH)$(OUT) $(OBJ_FILES)
-
-#all:
-#	$(CC) $(SRC) $(OSMODE) $(DBGFLAG) $(CFLAGS) $(PLATFORM) $(LFLAGS) $(TERMLIB) -o $(RUNPATH)
+	ar rcs $(EXPORT_PATH)$(OUT)$(EXT) $(OBJ_FILES)
 
 .PHONY: clean
 clean:

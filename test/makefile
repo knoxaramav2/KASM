@@ -1,12 +1,10 @@
-#Render or configure program
 
 CC = g++
 CFLAGS = -std=c++14 -Wall -g
-LFLAGS = -lm -ldl -lpthread
+LFLAGS = -L../bin -lkasm
 OUT = dev
 CLEANEXT = o a
 BITVRS=64
-DBGFLAG=-D__DEBUG
 SRC= launch.cpp
 
 ifeq ($(shell uname), Linux)
@@ -16,7 +14,6 @@ ifeq ($(shell uname), Linux)
 	EXPORT_PTH=../bin/
 	EXT=
 	RUNPATH=./$(EXPORT_PTH)$(OUT)$(EXT)
-	TERMLIB=-lncurses
 else
 #Windows
 	FixPath = $(subst /,\,$1)
@@ -28,7 +25,8 @@ else
 endif
 
 all:
-	$(CC) $(SRC) $(OSMODE) $(DBGFLAG) $(CFLAGS) $(PLATFORM) $(LFLAGS) $(TERMLIB) -o $(RUNPATH)
+	$(CC) $(SRC) $(OSMODE) $(CFLAGS) \
+		$(PLATFORM) $(LFLAGS) -o $(RUNPATH)
 
 .PHONY: run
 run:
@@ -37,7 +35,3 @@ run:
 .PHONY: clean
 clean:
 	rm -f $@ *.o
-
-.PHONY: dbg
-dbg: $(OUT)
-	$(RUNPATH) $(DBGFLAGS)
