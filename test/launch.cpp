@@ -1,3 +1,5 @@
+#include "../kasm.hpp"
+
 #include <iostream>
 
 using namespace std;
