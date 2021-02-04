@@ -2,6 +2,5 @@
 #define KASM
 
 #include "ops.hpp"
-#include "mem.hpp"
 
 #endif

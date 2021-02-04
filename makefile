@@ -6,7 +6,7 @@ OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
-SRC= main.cpp
+SRC= main.cpp ops.cpp mem.cpp
 OBJ_FILES = $(SRC:.cpp=.o)
 
 

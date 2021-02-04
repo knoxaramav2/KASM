@@ -1,6 +1,8 @@
 #ifndef KASM_MEM
 #define KASM_MEM
 
+#include <vector>
+
 enum KASMType{
     KT_INT,
     KT_FLOAT,
@@ -53,11 +55,53 @@ enum KRegister{
     KT_RIR,     //integer return
     KT_RFR,     //float return
     KT_RBR,     //byte return
-    KT_CTR,     //instruction counter
+    KT_CTR,     //instruction counter,
+
+    //End
+    KT_REG_CAP  //Not a register
 };
 
 enum KFlags{
     KT_CONDITION, //Comparison result
 };
+
+struct MemItem{
+    KASMType type;
+    void * data;
+    bool isConst;
+};
+
+//Stack frame
+class ValueStack{
+
+    public:
+    std::vector<MemItem> stack;
+
+    MemItem Pop();
+    void Push(KASMType type, void * data, bool isConst);
+};
+
+//Registers
+class KAsmRegisters{
+
+    MemItem* _registers [KT_REG_CAP];
+
+    public:
+
+    void * GetValue(KRegister kr);
+    bool SetValue(KRegister kr, void * data);
+
+};
+
+class FlagController{
+
+    unsigned _flag;
+
+    public:
+    
+    void Set(KFlags val);
+    bool Get(KFlags val);
+};
+
 
 #endif
