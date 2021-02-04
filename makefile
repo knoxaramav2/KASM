@@ -6,7 +6,9 @@ OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
-SRC= main.cpp ops.cpp mem.cpp controller.cpp
+SUBDIRS=test
+SRC= ops.cpp mem.cpp controller.cpp \
+	crossplat.cpp debug.cpp
 OBJ_FILES = $(SRC:.cpp=.o)
 
 
@@ -31,10 +33,13 @@ endif
 export EXT
 
 %.o : %.cpp
-	$(CC) $(CFLAGS) $(LFLAGS) -c $<
+	$(CC) $(CFLAGS) $(LFLAGS) $(DBGFLAG) $(PLATFORM) -c $<
 
 $(RUNPATH): $(OBJ_FILES)
 	ar rcs $(EXPORT_PATH)$(OUT)$(EXT) $(OBJ_FILES)
+
+.PHONY: rebuild
+rebuild: clean $(RUNPATH)
 
 .PHONY: clean
 clean:

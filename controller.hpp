@@ -7,6 +7,9 @@
 
 class KASMController{
 
+    KAsmRegisters _reg;
+    InstructionFrame _instFrame;
+
     public:
 
     KASMController();
@@ -19,9 +22,6 @@ class KASMController{
     void PauseExecution();
     void ContinueExecution();
     void EndExecution();
-
-
-
 };
 
 #endif

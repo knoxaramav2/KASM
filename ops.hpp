@@ -29,11 +29,11 @@ enum KASMOp{
 
     //Control
     KT_JMP,     //jmp
+    KT_Call,    //call
 
     //Stack
     KT_PUSH,    //push
     KT_POP,     //pop
-    KT_PSTK     //
 
 };
 
@@ -42,32 +42,6 @@ struct FileRaw{
     std::vector<std::string> lines;
 
     FileRaw(std::string filePath);
-};
-
-struct Instruction{
-    FileRaw * Source;
-    KASMOp OpCode;
-    MemItem * Rv0;
-    MemItem * Rv1;
-    MemItem * Rv2;
-
-    Instruction();
-};
-
-class InstructionFrame{
-
-    CallFrame _stackFrame;
-    std::vector<Instruction> _instructions;
-    KAsmRegisters * _reg;
-
-    public:
-
-    InstructionFrame(KAsmRegisters&reg);
-    void AddInstruction(
-        FileRaw&src, KASMOp op, 
-        MemItem * r0,
-        MemItem * r1,
-        MemItem * r2);
 };
 
 struct Label{
@@ -81,8 +55,39 @@ class LabelTable{
 
     public:
 
-    int ResolveInstructions(InstructionFrame &ctrl);
     bool AddLabel(std::string name, int instNo);
 };
+
+struct Instruction{
+    FileRaw * Source;
+    KASMOp OpCode;
+    MemItem * Rv0;
+    MemItem * Rv1;
+    MemItem * Rv2;
+
+    Instruction();
+};
+
+class InstructionFrame{
+    //runtime
+    std::vector<CallFrame> _frameStack;
+    KAsmRegisters * _reg;
+
+    //compiletime
+    LabelTable _labelTable;
+    std::vector<Instruction> _instructions;
+
+
+    public:
+
+    void ProcessScripts(FileRaw&raw);
+    InstructionFrame(KAsmRegisters&reg);
+    void AddInstruction(
+        FileRaw&src, KASMOp op, 
+        MemItem * r0,
+        MemItem * r1,
+        MemItem * r2);
+};
+
 
 #endif

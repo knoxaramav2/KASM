@@ -1,10 +1,12 @@
 #include "controller.hpp"
+#include "crossplat.hpp"
 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
-KASMController::KASMController(){
+KASMController::KASMController() : _instFrame(_reg){
 
 }
 
@@ -13,7 +15,9 @@ KASMController::~KASMController(){
 }
 
 void KASMController::LoadScript(string path){
-    cout << "Loading " << path << endl;
+    string relPath = KCompat::FormatPath(path);
+    FileRaw fr(relPath);
+    _instFrame.ProcessScripts(fr);
 }
 
 bool KASMController::RegisterCommand(){

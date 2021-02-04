@@ -3,10 +3,9 @@
 #constants (only resolve in this file)
 .helloTxt   "Hello World\n"
 .gdbyeTxt   "Goodbye Text\n"
-.importFile "import"
 
 #include another script, injected here
-load .importFile
+$load "import"
 
 #launch point. Must be exactly one
 :start
