@@ -21,16 +21,16 @@ FileRaw::FileRaw(string filePath){
 
 
 Instruction::Instruction(){
-    Source = NULL;
-    Rv0 = Rv1 = Rv2 = NULL;
+    Source = nullptr;
+    Rv0 = Rv1 = Rv2 = nullptr;
 }
 
 
-InstructionController::InstructionController(KAsmRegisters&reg){
+InstructionFrame::InstructionFrame(KAsmRegisters&reg){
     _reg = &reg;
 }
 
-void InstructionController::AddInstruciton(
+void InstructionFrame::AddInstruction(
     FileRaw&src, KASMOp op, 
     MemItem * r0,
     MemItem * r1,
@@ -44,4 +44,22 @@ void InstructionController::AddInstruciton(
     inst.Rv2 = r2;
 
     _instructions.push_back(inst);
+}
+
+
+int LabelTable::ResolveInstructions(InstructionFrame &ctrl){
+
+    int errors = 0;
+
+
+    return errors;
+}
+
+bool LabelTable::AddLabel(std::string name, int instNo){
+
+    Label label;
+    label.Name = name;
+    label.LineNo = instNo;
+    
+    return true;
 }

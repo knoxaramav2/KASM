@@ -33,6 +33,7 @@ enum KASMOp{
     //Stack
     KT_PUSH,    //push
     KT_POP,     //pop
+    KT_PSTK     //
 
 };
 
@@ -53,20 +54,20 @@ struct Instruction{
     Instruction();
 };
 
-class InstructionController{
+class InstructionFrame{
 
+    CallFrame _stackFrame;
     std::vector<Instruction> _instructions;
     KAsmRegisters * _reg;
 
     public:
 
-    InstructionController(KAsmRegisters&reg);
-    void AddInstruciton(
+    InstructionFrame(KAsmRegisters&reg);
+    void AddInstruction(
         FileRaw&src, KASMOp op, 
         MemItem * r0,
         MemItem * r1,
         MemItem * r2);
-
 };
 
 struct Label{
@@ -80,8 +81,8 @@ class LabelTable{
 
     public:
 
-    int ResolveInstructions(InstructionController &ctrl);
-    bool AddLabel(std::string label, int instNo);
+    int ResolveInstructions(InstructionFrame &ctrl);
+    bool AddLabel(std::string name, int instNo);
 };
 
 #endif

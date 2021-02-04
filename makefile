@@ -6,7 +6,7 @@ OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
-SRC= main.cpp ops.cpp mem.cpp
+SRC= main.cpp ops.cpp mem.cpp controller.cpp
 OBJ_FILES = $(SRC:.cpp=.o)
 
 
@@ -31,7 +31,7 @@ endif
 export EXT
 
 %.o : %.cpp
-	$(CC) -c $<
+	$(CC) $(CFLAGS) $(LFLAGS) -c $<
 
 $(RUNPATH): $(OBJ_FILES)
 	ar rcs $(EXPORT_PATH)$(OUT)$(EXT) $(OBJ_FILES)

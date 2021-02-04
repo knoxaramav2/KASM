@@ -69,10 +69,13 @@ struct MemItem{
     KASMType type;
     void * data;
     bool isConst;
+
+    MemItem();
+    ~MemItem();
 };
 
 //Stack frame
-class ValueStack{
+class CallFrame{
 
     public:
     std::vector<MemItem> stack;
