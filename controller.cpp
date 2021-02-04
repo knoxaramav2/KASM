@@ -1,5 +1,7 @@
 #include "controller.hpp"
 
+#include <iostream>
+
 using namespace std;
 
 KASMController::KASMController(){
@@ -11,7 +13,7 @@ KASMController::~KASMController(){
 }
 
 void KASMController::LoadScript(string path){
-
+    cout << "Loading " << path << endl;
 }
 
 bool KASMController::RegisterCommand(){

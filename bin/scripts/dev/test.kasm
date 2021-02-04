@@ -1,0 +1,46 @@
+#base script
+
+#constants (only resolve in this file)
+.helloTxt   "Hello World\n"
+.gdbyeTxt   "Goodbye Text\n"
+.importFile "import"
+
+#include another script, injected here
+load .importFile
+
+#launch point. Must be exactly one
+:start
+
+    #read user input to 
+    print .helloTxt
+    rdln rs0
+
+    mov 5.2 rf0
+    print rf0
+
+    call func
+    print rf0
+    print rfr
+
+    push rf0
+    add rfr rac
+
+    call func2
+    pop rf0
+    add rfr rac
+    print rac
+    print rf0
+    print rfr
+
+    ret 0
+
+
+#output
+#Hello World
+#< This is test input saved to a string register
+#5.2
+#3.41
+#2
+#5
+#3.41
+#3

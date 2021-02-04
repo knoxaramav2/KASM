@@ -1,6 +1,8 @@
 #ifndef KASM_CTRL
 #define KASM_CTRL
 
+#include "ops.hpp"
+
 #include <string>
 
 class KASMController{
@@ -18,7 +20,7 @@ class KASMController{
     void ContinueExecution();
     void EndExecution();
 
-    
+
 
 };
 
