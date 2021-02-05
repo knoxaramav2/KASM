@@ -1,10 +1,13 @@
+#pragma once
 #ifndef KASM_OPS
 #define KASM_OPS
 
 #include <string>
 #include <vector>
 #include <map>
+#include <functional>
 
+#include "instructionRegistery.hpp"
 #include "mem.hpp"
 
 namespace KASM{
@@ -36,6 +39,9 @@ namespace KASM{
         //Stack
         KT_PUSH,    //push
         KT_POP,     //pop
+
+        //End
+        KT_END      //End of default instructions
 
     };
 
@@ -71,14 +77,17 @@ namespace KASM{
         Instruction();
     };
 
+
     class InstructionFrame{
+        friend struct Instruction;
         //runtime
         std::vector<CallFrame> _frameStack;
         KAsmRegisters * _reg;
+        InstructionRegistry _instructions;
 
         //compiletime
         LabelTable _labelTable;
-        std::vector<Instruction> _instructions;
+        
 
         int GetLabel(std::string& line, int lineNp, FileRaw&raw);
         void GetInstruction(std::string& line);
@@ -95,6 +104,13 @@ namespace KASM{
             MemItem * r0,
             MemItem * r1,
             MemItem * r2);
+
+        CallFrame * GetCallFrame();
+        KAsmRegisters * GetRegisters();
+
+        //#ifdef __DEBUG
+        void Test();
+        //#endif
     };
 }
 

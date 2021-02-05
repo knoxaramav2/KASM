@@ -21,7 +21,7 @@ void AsmController::LoadScript(string path){
     _instFrame.ProcessScripts(fr);
 }
 
-bool AsmController::RegisterCommand(){
+bool AsmController::RegisterCommand(InstructionProc proc){
 
     return true;
 }
@@ -41,4 +41,8 @@ void AsmController::ContinueExecution(){
 
 void AsmController::EndExecution(){
 
+}
+
+void AsmController::Test(){
+    _instFrame.Test();
 }

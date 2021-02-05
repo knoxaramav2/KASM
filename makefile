@@ -1,14 +1,15 @@
 
 CC = g++
-CFLAGS = -std=c++14 -Wall -g
+CFLAGS = -std=c++17 -Wall -g
 LFLAGS = -lm -ldl -lpthread
 OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
 SUBDIRS=test
-SRC= ops.cpp mem.cpp controller.cpp \
-	crossplat.cpp debug.cpp utils.cpp 
+SRC= defaultInstructions.cpp ops.cpp instructionRegistry.cpp mem.cpp \
+	controller.cpp crossplat.cpp debug.cpp utils.cpp \
+	
 OBJ_FILES = $(SRC:.cpp=.o)
 
 

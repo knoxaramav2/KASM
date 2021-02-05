@@ -93,6 +93,9 @@ namespace KASM{
 
         public:
 
+        KAsmRegisters();
+        ~KAsmRegisters();
+
         void * GetValue(KRegister kr);
         bool SetValue(KRegister kr, void * data);
 

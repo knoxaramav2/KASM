@@ -83,6 +83,7 @@ InstructionFrame::InstructionFrame(KAsmRegisters&reg){
 }
 
 int InstructionFrame::GetLabel(string& line, int lineNo, FileRaw& raw){
+    return 0;
     vector<string> terms = Utils::SplitString(line);
 
     if (terms.size() != 1) { return 1; }
@@ -92,8 +93,6 @@ int InstructionFrame::GetLabel(string& line, int lineNo, FileRaw& raw){
 }
 
 void InstructionFrame::GetInstruction(string& line){
-    return;
-    //cout << "@ INST: " << line << endl;
     vector<string> terms = Utils::SplitString(line);
 }
 
@@ -156,8 +155,25 @@ void InstructionFrame::AddInstruction(
     inst.Rv1 = r1;
     inst.Rv2 = r2;
 
-    _instructions.push_back(inst);
+    //_instructions.push_back(inst);
 }
+
+CallFrame * InstructionFrame::GetCallFrame(){
+    if (_frameStack.size()==0) {return nullptr;}
+    return &_frameStack[_frameStack.size()-1];
+}
+
+KAsmRegisters * InstructionFrame::GetRegisters(){
+    return _reg;
+}
+
+void InstructionFrame::Test(){
+    InstructionProc proc = _instructions.GetInstruction("noop");
+    Instruction inst;
+    inst.OpCode = KT_NONE;
+    proc(inst, this);
+}
+
 
 bool LabelTable::AddLabel(string name, FileRaw&raw, int instNo){
 

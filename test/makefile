@@ -1,7 +1,8 @@
 
 CC = g++
-CFLAGS = -std=c++14 -Wall -g
+CFLAGS = -std=c++17 -Wall -g
 LFLAGS = -L../bin -lkasm
+DBGFLAGS = -D__DEBUG
 OUT = dev
 CLEANEXT = o a
 BITVRS=64
@@ -25,7 +26,7 @@ else
 endif
 
 all:
-	$(CC) $(SRC) $(OSMODE) $(CFLAGS) \
+	$(CC) $(SRC) $(OSMODE) $(CFLAGS) $(DBGFLAGS) \
 		$(PLATFORM) $(LFLAGS) -o $(RUNPATH)
 
 .PHONY: run

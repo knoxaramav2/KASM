@@ -10,6 +10,7 @@ int main(int argc, char ** argv){
 
     KASM::AsmController controller;
     controller.LoadScript("scripts/dev/test.kasm");
+    controller.Test();
 
     return 0;
 }
