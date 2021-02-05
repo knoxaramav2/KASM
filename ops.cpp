@@ -1,5 +1,6 @@
 #include "ops.hpp"
 #include "debug.hpp"
+#include "utils.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -7,10 +8,6 @@
 
 using namespace std;
 using namespace KASM;
-
-#define IsWS(c) (c==' ' || c=='\t' || c=='\r' || c=='\n')
-#define IsAlpha(c) ((c>='a' && c<='z') || (c>='A' && c<'Z') || c=='_')
-#define IsNum(c) (c>='0' && c<='9')
 
 enum CharIndic{
     //Skip line
@@ -85,6 +82,26 @@ InstructionFrame::InstructionFrame(KAsmRegisters&reg){
     _reg = &reg;
 }
 
+void InstructionFrame::GetLabel(string& line){
+    //cout << "@ LABEL: " << line << endl;
+    vector<string> terms = Utils::SplitString(line);
+}
+
+void InstructionFrame::GetInstruction(string& line){
+    //cout << "@ INST: " << line << endl;
+    vector<string> terms = Utils::SplitString(line);
+}
+
+void InstructionFrame::ProcessPreProc(string& line){
+    //cout << "@ PREPROC: " << line << endl;
+    vector<string> terms = Utils::SplitString(line);
+}
+
+void InstructionFrame::ProcessInlined(string& line){
+    //cout << "@ INLINED: " << line << endl;
+    vector<string> terms = Utils::SplitString(line);
+}
+
 void InstructionFrame::ProcessScripts(FileRaw&raw){
     for(size_t i = 0; i < raw.lines.size(); ++i){
         string str = raw.lines[i];
@@ -99,16 +116,16 @@ void InstructionFrame::ProcessScripts(FileRaw&raw){
                 Debug::WriteErr(i, raw.fileName, str, "Constants not yet implemented");
             break;
             case NWS_Label://add to label table
-
+                GetLabel(str);
             break;
             case NWS_PreProc://switch to preproc
-
+                ProcessPreProc(str);
             break;
             case NWS_ID://instruction
-
+                GetInstruction(str);
             break;
             case NWS_ILLEGAL://abort, throw error
-
+                Debug::WriteErr(i, raw.fileName, str, "Illegal character");
             break;
         }
     }

@@ -78,6 +78,11 @@ namespace KASM{
         LabelTable _labelTable;
         std::vector<Instruction> _instructions;
 
+        void GetLabel(std::string& line);
+        void GetInstruction(std::string& line);
+        
+        void ProcessPreProc(std::string& line);
+        void ProcessInlined(std::string& line);
 
         public:
 
