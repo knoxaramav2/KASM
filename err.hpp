@@ -8,7 +8,7 @@ namespace KASM{
 
         ERR_OK,
 
-        ERR_NO_VAL,
+        ERR_MISSING_ARG,
         ERR_TYPE_MISMATCH,
         ERR_UNIMPLEMENTED,
     };

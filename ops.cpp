@@ -168,10 +168,32 @@ KAsmRegisters * InstructionFrame::GetRegisters(){
 }
 
 void InstructionFrame::Test(){
-    InstructionProc proc = _instructions.GetInstruction("noop");
-    Instruction inst;
-    inst.OpCode = KT_NONE;
-    proc(inst, this);
+
+    cout << "START TEST:" <<endl;
+
+    InstructionProc proc = _instructions.GetInstruction("mov");
+    Instruction* inst = new Instruction();
+    inst->OpCode = KT_MOV;
+    inst->Rv0 = new MemItem();
+    inst->Rv1 = new MemItem();
+    inst->Rv0->type=KT_INT;
+    inst->Rv0->data=(void*) new int(3);
+    inst->Rv0->isConst = true;
+    inst->Rv1->data=(void*) _reg->GetRegister(KT_RI0);
+    inst->Rv1->type=KT_INT;
+    inst->Rv1->isConst=false;
+    proc(*inst, this);
+
+    InstructionProc prnt = _instructions.GetInstruction("prnt");
+    Instruction* inst2 = new Instruction();
+    inst2->OpCode = KT_PRINT;
+    inst2->Rv0 = new MemItem();
+    inst2->Rv0->type=KT_INT;
+    inst2->Rv0->data=(void*) _reg->GetRegister(KT_RI0);
+    inst2->Rv0->isConst = false;
+    prnt(*inst2, this);
+
+    cout << endl << "END TEST:" << endl;
 }
 
 

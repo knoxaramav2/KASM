@@ -1,3 +1,5 @@
+#include <string>
+
 #include "mem.hpp"
 
 using namespace std;
@@ -19,6 +21,7 @@ KAsmRegisters::KAsmRegisters(){
         case KT_RI6:
         case KT_RI7:
             item->type = KT_INT;
+            item->data = new int(0);
         break;
 
         case KT_RF0:
@@ -30,6 +33,7 @@ KAsmRegisters::KAsmRegisters(){
         case KT_RF6:
         case KT_RF7:
             item->type = KT_FLOAT;
+            item->data = new float(0.0f);
         break;
 
         case KT_RB0:
@@ -40,7 +44,8 @@ KAsmRegisters::KAsmRegisters(){
         case KT_RB5:
         case KT_RB6:
         case KT_RB7:
-            item->type = KT_FLOAT;
+            item->type = KT_BYTE;
+            item->data = new unsigned char(0);
         break;
 
         case KT_RS0:
@@ -48,31 +53,58 @@ KAsmRegisters::KAsmRegisters(){
         case KT_RS2:
         case KT_RS3:
             item->type = KT_STRING;
+            item->data = new string;
         break;
 
         case KT_RAC:
         case KT_RIR:
             item->type = KT_INT;
+            item->data = new int(0);
         break;
         case KT_RFR:
             item->type = KT_FLOAT;
+            item->data = new float(0.0f);
         break;
         case KT_RBR:
             item->type = KT_BYTE;
+            item->data = new unsigned char(0);
         break;
         case KT_CTR:
             item->type = KT_INT;
+            item->data = new int(0);
         break;
-        
-        default:
-            break;
+        case KT_REG_CAP: break;
         }
+
+        _registers[i] = item;
     }
 }
 
 KAsmRegisters::~KAsmRegisters(){
 
 }
+
+void * KAsmRegisters::GetValue(KRegister idx){
+    if (idx < 0 || idx >= KT_REG_CAP) {return  nullptr;}
+
+    return _registers[idx]->data;
+}
+
+bool KAsmRegisters::SetValue(KRegister idx, void * data){
+
+    if (idx < 0 || idx >= KT_REG_CAP) {return false;}
+
+
+
+    return false;
+}
+
+MemItem * KAsmRegisters::GetRegister(KRegister idx){
+
+    if (idx < 0 || idx >= KT_REG_CAP) {return nullptr;}
+    return _registers[idx];
+}
+
 
 MemItem::MemItem(){
     type = KT_INT;

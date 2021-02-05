@@ -33,6 +33,6 @@ all:
 run:
 	$(RUNPATH)
 
-#.PHONY: clean
+.PHONY: clean
 clean:
 	rm -f $@ *.o

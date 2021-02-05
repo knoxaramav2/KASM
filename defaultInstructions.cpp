@@ -16,7 +16,24 @@ ErrCode _noOp (Instruction&inst, InstructionFrame*frame){
 //general
 ErrCode _mov (Instruction&inst, InstructionFrame*frame){
     
-    return ERR_UNIMPLEMENTED;
+    MemItem * i1 = inst.Rv0;
+    MemItem * i2 = inst.Rv1;
+
+    if (i1 == nullptr || i2 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (i1->type != i2->type){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    switch (i1->type)
+    {
+    case KT_INT: *(int*)i2->data = *((int*)i1->data); break;
+    
+    default:
+        break;
+    }
+
+    return ERR_OK;
 }
 
 ErrCode _exit (Instruction&inst, InstructionFrame*frame){
@@ -81,9 +98,27 @@ ErrCode _pop (Instruction&inst, InstructionFrame*frame){
 
 //High level
 ErrCode _prnt (Instruction&inst, InstructionFrame*frame){
-    
-    if (inst.Rv0->type != KT_STRING){
+
+    //TODO - replace with crossplat UI calls
+    switch(inst.Rv0->type){
+        case KT_INT:
+        cout << *(int*)inst.Rv0->data;
+        break;
+        case KT_FLOAT:
+        cout << *(float*)inst.Rv0->data;
+        break;
+        case KT_CHAR:
+        cout << *(signed char*)inst.Rv0->data;
+        break;
+        case KT_BYTE:
+        cout << *(unsigned char*)inst.Rv0->data;
+        break;
+        case KT_STRING:
+        cout << *(string*)inst.Rv0->data;
+        break;
+        default:
         return ERR_TYPE_MISMATCH;
+        break;
     }
 
     return ERR_OK;
@@ -120,4 +155,10 @@ void KASM::InitInstructionPntrs(InstructionRegistry* reg){
 
     reg->RegisterInstruction("push", _push);
     reg->RegisterInstruction("pop", _pop);
+
+    reg->RegisterInstruction("prnt", +_prnt);
+    reg->RegisterInstruction("goxy", _goxy);
+    reg->RegisterInstruction("clr", _clr);
+
+
 }

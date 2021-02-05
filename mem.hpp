@@ -98,6 +98,7 @@ namespace KASM{
 
         void * GetValue(KRegister kr);
         bool SetValue(KRegister kr, void * data);
+        MemItem * GetRegister(KRegister);
 
     };
 
