@@ -1,4 +1,7 @@
 #include "defaultInstructions.hpp"
+#include "mem.hpp"
+#include "ops.hpp"
+#include "err.hpp"
 
 #include <string>
 #include <iostream>
@@ -6,77 +9,115 @@
 using namespace std;
 using namespace KASM;
 
-int _noOp (Instruction&inst, InstructionFrame*frame){
-    return 0;
+ErrCode _noOp (Instruction&inst, InstructionFrame*frame){
+    return ERR_OK;
 }
 
 //general
-int _mov (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _mov (Instruction&inst, InstructionFrame*frame){
+    
+    return ERR_UNIMPLEMENTED;
 }
 
-int _exit (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _exit (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
 //math
-int _add (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _add (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _mult (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _mult (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _div (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _div (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _pow (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _pow (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
 //logic
-int _cmp (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _cmp (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _jlss (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _jlss (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _jgtr (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _jgtr (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _jeql (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _jeql (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _jneql (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _jneql (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
 //control
-int _jmp (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _jmp (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _call (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _call (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
 //stack
-int _push (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _push (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
-int _pop (Instruction&inst, InstructionFrame*frame){
-    return -1;
+ErrCode _pop (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
 }
 
+//High level
+ErrCode _prnt (Instruction&inst, InstructionFrame*frame){
+    
+    if (inst.Rv0->type != KT_STRING){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    return ERR_OK;
+}
+
+ErrCode _goxy (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
+}
+
+ErrCode _clr (Instruction&inst, InstructionFrame*frame){
+    return ERR_UNIMPLEMENTED;
+}
 
 //default instructions
 void KASM::InitInstructionPntrs(InstructionRegistry* reg){
     reg->RegisterInstruction("noop", _noOp);
+
+    reg->RegisterInstruction("mov", _mov);
+    reg->RegisterInstruction("exit", _exit);
+
+    reg->RegisterInstruction("add", _add);
+    reg->RegisterInstruction("mult", _mult);
+    reg->RegisterInstruction("div", _div);
+    reg->RegisterInstruction("pow", _pow);
+
+    reg->RegisterInstruction("cmp", _cmp);
+    reg->RegisterInstruction("jlss", _jlss);
+    reg->RegisterInstruction("jgtr", _jgtr);
+    reg->RegisterInstruction("jeql", _jeql);
+    reg->RegisterInstruction("jneql", _jneql);
+
+    reg->RegisterInstruction("jmp", _jmp);
+    reg->RegisterInstruction("call", _call);
+
+    reg->RegisterInstruction("push", _push);
+    reg->RegisterInstruction("pop", _pop);
 }

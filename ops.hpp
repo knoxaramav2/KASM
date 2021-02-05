@@ -40,6 +40,11 @@ namespace KASM{
         KT_PUSH,    //push
         KT_POP,     //pop
 
+        //High level
+        KT_PRINT,   //prnt
+        KT_GOXY,    //goxy
+        KT_CLRSCRN, //clr
+
         //End
         KT_END      //End of default instructions
 
@@ -88,7 +93,6 @@ namespace KASM{
         //compiletime
         LabelTable _labelTable;
         
-
         int GetLabel(std::string& line, int lineNp, FileRaw&raw);
         void GetInstruction(std::string& line);
         

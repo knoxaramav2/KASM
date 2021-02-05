@@ -1,10 +1,12 @@
 #ifndef KASM_PROCDEF
 #define KASM_PROCDEF
 
+#include "err.hpp"
+
 namespace KASM{
     struct Instruction;
     class InstructionFrame;
-    typedef int (*InstructionProc)(Instruction&, InstructionFrame*);
+    typedef ErrCode (*InstructionProc)(Instruction&, InstructionFrame*);
 }
 
 #endif
