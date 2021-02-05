@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "mem.hpp"
 
@@ -47,16 +48,17 @@ namespace KASM{
 
     struct Label{
         std::string Name;
+        std::string SourceFile;
         int LineNo;
     };
 
     class LabelTable{
 
-        std::vector<Label> _labels;
+        std::map<std::string, Label> _labels;
 
         public:
 
-        bool AddLabel(std::string name, int instNo);
+        bool AddLabel(std::string name, FileRaw&raw, int instNo);
     };
 
     struct Instruction{
@@ -78,7 +80,7 @@ namespace KASM{
         LabelTable _labelTable;
         std::vector<Instruction> _instructions;
 
-        void GetLabel(std::string& line);
+        int GetLabel(std::string& line, int lineNp, FileRaw&raw);
         void GetInstruction(std::string& line);
         
         void ProcessPreProc(std::string& line);

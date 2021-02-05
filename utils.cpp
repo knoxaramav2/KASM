@@ -12,33 +12,17 @@ string extractString(string& raw, size_t& start, size_t end){
     return ret;
 }
 
-//split by whitespace, preserve quotes
+//split by whitespace
 vector<string> Utils::SplitString(string line){
 
     vector<string> ret;
-
-    bool dQuote = false;
-    bool sQuote = false;
     size_t idx = 0;
     string tmp;
     for (size_t i = 0; i <= line.size(); ++i){
         char c = line[i];
 
+        //leave open for more split options
         switch(c){
-            case '\'':
-                if (sQuote){
-
-                } else {
-
-                }
-            break;
-            case '"':
-                if (dQuote){
-
-                } else {
-
-                }
-            break;
             case ' ':
             case '\t':
             case '\r':
@@ -58,9 +42,11 @@ vector<string> Utils::SplitString(string line){
         }
     }
 
+#ifndef __DEBUG
     for(size_t i=0; i<ret.size(); ++i){
         cout << "[" << ret[i] << "] ";
     }
+#endif
 
     cout << endl;
 

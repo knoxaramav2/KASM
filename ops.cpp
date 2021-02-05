@@ -82,22 +82,29 @@ InstructionFrame::InstructionFrame(KAsmRegisters&reg){
     _reg = &reg;
 }
 
-void InstructionFrame::GetLabel(string& line){
-    //cout << "@ LABEL: " << line << endl;
+int InstructionFrame::GetLabel(string& line, int lineNo, FileRaw& raw){
     vector<string> terms = Utils::SplitString(line);
+
+    if (terms.size() != 1) { return 1; }
+    if (_labelTable.AddLabel(terms[0], raw, lineNo)) { return 2;}
+
+    return 0;
 }
 
 void InstructionFrame::GetInstruction(string& line){
+    return;
     //cout << "@ INST: " << line << endl;
     vector<string> terms = Utils::SplitString(line);
 }
 
 void InstructionFrame::ProcessPreProc(string& line){
+    return;
     //cout << "@ PREPROC: " << line << endl;
     vector<string> terms = Utils::SplitString(line);
 }
 
 void InstructionFrame::ProcessInlined(string& line){
+    return;
     //cout << "@ INLINED: " << line << endl;
     vector<string> terms = Utils::SplitString(line);
 }
@@ -113,10 +120,15 @@ void InstructionFrame::ProcessScripts(FileRaw&raw){
             //Skip
             break;
             case NWS_Constant://add constant decl to current call frame
-                Debug::WriteErr(i, raw.fileName, str, "Constants not yet implemented");
+                Debug::WriteErr(i, raw.fileName, str, "Constants not yet implemented.");
             break;
             case NWS_Label://add to label table
-                GetLabel(str);
+            {
+                int res = GetLabel(str, i, raw);
+                if (res == 1) {
+                    Debug::WriteErr(i, raw.fileName, str, "Illegal label declaration.");
+                }
+            }
             break;
             case NWS_PreProc://switch to preproc
                 ProcessPreProc(str);
@@ -147,11 +159,19 @@ void InstructionFrame::AddInstruction(
     _instructions.push_back(inst);
 }
 
-bool LabelTable::AddLabel(std::string name, int instNo){
+bool LabelTable::AddLabel(string name, FileRaw&raw, int instNo){
 
     Label label;
     label.Name = name;
     label.LineNo = instNo;
+    label.SourceFile = raw.fileName;
+
+    if (_labels.find(name) == _labels.end()){
+        _labels[name]=label;
+    } else {
+        Debug::WriteErr(instNo, raw.fileName, raw.lines[instNo], "Duplicate label.");
+        return false;
+    }
     
     return true;
 }

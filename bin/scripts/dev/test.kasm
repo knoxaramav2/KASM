@@ -33,7 +33,6 @@ $load "import"
 
     ret 0
 
-
 #output
 #Hello World
 #< This is test input saved to a string register
