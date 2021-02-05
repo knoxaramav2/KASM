@@ -9,6 +9,7 @@
 #endif
 
 using namespace std;
+using namespace KASM;
 
 string KCompat::FormatPath(string path){
 

@@ -3,14 +3,16 @@
 
 #include <string>
 
-class Debug{
+namespace KASM{
+    class Debug{
 
-    public:
+        public:
+        
+        static void WriteErr(int line, std::string&src, std::string& text, std::string& msg);
+        static void WriteErr(int line, std::string&src, std::string& text, const char* msg);
     
-    static void WriteErr(int line, std::string& text, std::string& msg);
-    static void WriteErr(int line, std::string& text, const char* msg);
- 
-};
+    };
+}
 
 
 #endif

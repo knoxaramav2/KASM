@@ -2,26 +2,29 @@
 #define KASM_CTRL
 
 #include "ops.hpp"
-
 #include <string>
 
-class KASMController{
+namespace KASM{
+    class AsmController{
 
-    KAsmRegisters _reg;
-    InstructionFrame _instFrame;
+        KAsmRegisters _reg;
+        InstructionFrame _instFrame;
 
-    public:
+        public:
 
-    KASMController();
-    ~KASMController();
+        AsmController();
+        ~AsmController();
 
-    void LoadScript(std::string path);
-    bool RegisterCommand();
-    bool Run();
+        void LoadScript(std::string path);
+        bool RegisterCommand();
+        bool Run();
 
-    void PauseExecution();
-    void ContinueExecution();
-    void EndExecution();
-};
+        void PauseExecution();
+        void ContinueExecution();
+        void EndExecution();
+    };
+}
+
+
 
 #endif

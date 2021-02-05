@@ -1,5 +1,5 @@
-#ifndef KASM
-#define KASM
+#ifndef _KASM_
+#define _KASM_
 
 #include "controller.hpp"
 

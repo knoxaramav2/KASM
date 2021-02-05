@@ -10,12 +10,15 @@
     #define EL "\n"
 #endif
 
-class KCompat{
+namespace KASM{
+    class KCompat{
 
-    public:
+        public:
 
-    static std::string FormatPath(std::string path);
+        static std::string FormatPath(std::string path);
 
-};
+    };
+}
+
 
 #endif

@@ -6,6 +6,7 @@
 #include <sstream>
 
 using namespace std;
+using namespace KASM;
 
 #define IsWS(c) (c==' ' || c=='\t' || c=='\r' || c=='\n')
 #define IsAlpha(c) ((c>='a' && c<='z') || (c>='A' && c<'Z') || c=='_')
@@ -39,7 +40,7 @@ CharIndic FirstNWSChar(string&s){
         switch(c){
             case '#': return NWS_Comment;
             case '.': return NWS_Constant;
-            case ':': return NWS_Constant;
+            case ':': return NWS_Label;
             case '$': return NWS_PreProc;
             default: return NWS_ILLEGAL;
         }
@@ -95,10 +96,10 @@ void InstructionFrame::ProcessScripts(FileRaw&raw){
             //Skip
             break;
             case NWS_Constant://add constant decl to current call frame
-                Debug::WriteErr(i, str, "Constants not yet implemented");
+                Debug::WriteErr(i, raw.fileName, str, "Constants not yet implemented");
             break;
             case NWS_Label://add to label table
-                
+
             break;
             case NWS_PreProc://switch to preproc
 

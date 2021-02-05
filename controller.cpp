@@ -5,39 +5,40 @@
 #include <fstream>
 
 using namespace std;
+using namespace KASM;
 
-KASMController::KASMController() : _instFrame(_reg){
-
-}
-
-KASMController::~KASMController(){
+AsmController::AsmController() : _instFrame(_reg){
 
 }
 
-void KASMController::LoadScript(string path){
+AsmController::~AsmController(){
+
+}
+
+void AsmController::LoadScript(string path){
     string relPath = KCompat::FormatPath(path);
     FileRaw fr(relPath);
     _instFrame.ProcessScripts(fr);
 }
 
-bool KASMController::RegisterCommand(){
+bool AsmController::RegisterCommand(){
 
     return true;
 }
 
-bool KASMController::Run(){
+bool AsmController::Run(){
 
     return true;
 }
 
-void KASMController::PauseExecution(){
+void AsmController::PauseExecution(){
 
 }
 
-void KASMController::ContinueExecution(){
+void AsmController::ContinueExecution(){
 
 }
 
-void KASMController::EndExecution(){
+void AsmController::EndExecution(){
 
 }

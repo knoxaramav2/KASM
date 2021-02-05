@@ -4,12 +4,16 @@
 #include <string>
 #include <vector>
 
-class Utils{
+namespace KASM{
+    class Utils{
 
-    public:
+        public:
 
-    static std::vector<std::string> SplitString(std::string line);
+        static std::vector<std::string> SplitString(std::string line);
 
-};
+    };
+}
+
+
 
 #endif

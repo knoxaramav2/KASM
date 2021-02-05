@@ -8,7 +8,7 @@ BITVRS=64
 DBGFLAG=-D__DEBUG
 SUBDIRS=test
 SRC= ops.cpp mem.cpp controller.cpp \
-	crossplat.cpp debug.cpp
+	crossplat.cpp debug.cpp utils.cpp 
 OBJ_FILES = $(SRC:.cpp=.o)
 
 

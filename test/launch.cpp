@@ -8,7 +8,7 @@ int main(int argc, char ** argv){
 
     cout << "Start Test" << endl;
 
-    KASMController controller;
+    KASM::AsmController controller;
     controller.LoadScript("scripts/dev/test.kasm");
 
     return 0;
