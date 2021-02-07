@@ -28,6 +28,8 @@ bool AsmController::RegisterCommand(InstructionProc proc){
 
 bool AsmController::Run(){
 
+    
+
     return true;
 }
 

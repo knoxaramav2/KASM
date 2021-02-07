@@ -16,6 +16,7 @@ namespace KASM{
         KT_NONE,
 
         //General
+        KT_LABEL,   //(meta)
         KT_MOV,     //mov
         KT_EXIT,    //exit    
 
@@ -57,7 +58,22 @@ namespace KASM{
         FileRaw(std::string filePath);
     };
 
+    struct Instruction{
+        FileRaw * Source;
+        KASMOp OpCode;
+        MemItem * Rv0;
+        MemItem * Rv1;
+        MemItem * Rv2;
+
+        Instruction* Next;
+        InstructionProc Proc;
+
+        Instruction();
+    };
+
+
     struct Label{
+        Instruction* Inst;
         std::string Name;
         std::string SourceFile;
         int LineNo;
@@ -69,22 +85,22 @@ namespace KASM{
 
         public:
 
-        bool AddLabel(std::string name, FileRaw&raw, int instNo);
-    };
+        Instruction* AddLabel(std::string name, FileRaw&raw, int instNo);
 
-    struct Instruction{
-        FileRaw * Source;
-        KASMOp OpCode;
-        MemItem * Rv0;
-        MemItem * Rv1;
-        MemItem * Rv2;
-
-        Instruction();
     };
 
 
     class InstructionFrame{
         friend struct Instruction;
+
+        Instruction * _base;
+        Instruction * _instPntr;
+
+        //state
+        bool _scriptLoad = false;
+        unsigned _scriptLevel = 0;
+
+
         //runtime
         std::vector<CallFrame> _frameStack;
         KAsmRegisters * _reg;
@@ -93,8 +109,10 @@ namespace KASM{
         //compiletime
         LabelTable _labelTable;
         
+        bool ParseArguments(Instruction* inst, std::vector<std::string>&args);
+
         int GetLabel(std::string& line, int lineNp, FileRaw&raw);
-        void GetInstruction(std::string& line);
+        void GetInstruction(std::string& line, FileRaw&raw);
         
         void ProcessPreProc(std::string& line);
         void ProcessInlined(std::string& line);
@@ -103,14 +121,12 @@ namespace KASM{
 
         void ProcessScripts(FileRaw&raw);
         InstructionFrame(KAsmRegisters&reg);
-        void AddInstruction(
-            FileRaw&src, KASMOp op, 
-            MemItem * r0,
-            MemItem * r1,
-            MemItem * r2);
+        void AddInstruction(Instruction*inst);
 
         CallFrame * GetCallFrame();
         KAsmRegisters * GetRegisters();
+
+        bool Ready();
 
         //#ifdef __DEBUG
         void Test();

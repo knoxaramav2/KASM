@@ -9,9 +9,10 @@
 
 namespace KASM{
     class InstructionRegistry{
-
+        //load data
         std::map<std::string, InstructionProc> _instructions;
 
+        //pre run functions
         void LoadDefaultInstructions();
 
         public:
@@ -20,7 +21,7 @@ namespace KASM{
         ~InstructionRegistry();
 
         bool RegisterInstruction(std::string name, InstructionProc proc);
-        InstructionProc GetInstruction(std::string inst);
+        InstructionProc GetInstruction(std::string inst);    
     };
 }
 

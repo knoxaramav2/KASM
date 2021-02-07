@@ -1,6 +1,7 @@
 #include "utils.hpp"
 
 #include <iostream>
+#include <string.h>
 
 using namespace std;
 using namespace KASM;
@@ -14,6 +15,7 @@ string extractString(string& raw, size_t& start, size_t end){
 
 //split by whitespace
 vector<string> Utils::SplitString(string line){
+
 
     vector<string> ret;
     size_t idx = 0;
@@ -51,4 +53,44 @@ vector<string> Utils::SplitString(string line){
     cout << endl;
 
     return ret;
+}
+
+string Utils::ToUpper(const char raw[]){
+
+    string ret;
+
+    for(size_t i=0; i < strlen(raw); ++i){
+        char c = raw[i];
+        if (c>='a' && c<= 'z') {
+            c -= 0x20;
+        }
+
+        ret += c;
+    }
+
+    return ret;
+}
+
+string Utils::ToUpper(string&raw){
+    return Utils::ToUpper(raw.c_str());
+}
+
+string Utils::ToLower(const char raw[]){
+
+    string ret;
+
+    for(size_t i=0; i < strlen(raw); ++i){
+        char c = raw[i];
+        if (c>='a' && c<= 'z') {
+            c += 0x20;
+        }
+
+        ret += c;
+    }
+
+    return ret;
+}
+
+string Utils::ToLower(string&raw){
+    return Utils::ToLower(raw.c_str());
 }

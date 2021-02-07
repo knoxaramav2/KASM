@@ -2,6 +2,7 @@
 #define KASM_MEM
 
 #include <vector>
+#include <map>
 
 namespace KASM{
 
@@ -89,17 +90,17 @@ namespace KASM{
     //Registers
     class KAsmRegisters{
 
-        MemItem* _registers [KT_REG_CAP];
+        //MemItem* _registers [KT_REG_CAP];
+        std::map<std::string, MemItem*> _registers;
 
         public:
 
         KAsmRegisters();
         ~KAsmRegisters();
 
-        void * GetValue(KRegister kr);
-        bool SetValue(KRegister kr, void * data);
-        MemItem * GetRegister(KRegister);
-
+        void * GetValue(std::string& reg);
+        bool SetValue(std::string& reg, void * data);
+        MemItem * GetRegister(std::string& reg);
     };
 
     class FlagController{

@@ -5,6 +5,7 @@
 using namespace std;
 using namespace KASM;
 
+/*
 KAsmRegisters::KAsmRegisters(){
     for (size_t i = 0; i < KT_REG_CAP; ++i){
         
@@ -79,30 +80,30 @@ KAsmRegisters::KAsmRegisters(){
         _registers[i] = item;
     }
 }
+*/
+
+KAsmRegisters::KAsmRegisters(){
+    
+}
 
 KAsmRegisters::~KAsmRegisters(){
 
 }
 
-void * KAsmRegisters::GetValue(KRegister idx){
-    if (idx < 0 || idx >= KT_REG_CAP) {return  nullptr;}
-
-    return _registers[idx]->data;
+void * KAsmRegisters::GetValue(string& reg){
+    if (_registers.find(reg) == _registers.end()) {return nullptr;}
+    return _registers[reg]->data;
 }
 
-bool KAsmRegisters::SetValue(KRegister idx, void * data){
-
-    if (idx < 0 || idx >= KT_REG_CAP) {return false;}
-
-
-
-    return false;
+bool KAsmRegisters::SetValue(string& reg, void * data){
+    if (_registers.find(reg) == _registers.end()) {return false;}
+    _registers[reg]->data = data;
+    return true;
 }
 
-MemItem * KAsmRegisters::GetRegister(KRegister idx){
-
-    if (idx < 0 || idx >= KT_REG_CAP) {return nullptr;}
-    return _registers[idx];
+MemItem * KAsmRegisters::GetRegister(string& reg){
+    if (_registers.find(reg) == _registers.end()) {return nullptr;}
+    return _registers[reg];
 }
 
 
