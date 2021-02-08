@@ -167,15 +167,138 @@ ErrCode _add (Instruction*inst, InstructionFrame*frame){
 }
 
 ErrCode _mult (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    MemItem * i1 = inst->Rv0;
+    MemItem * i2 = inst->Rv1;
+
+    //two operators requires (value, register)
+    if (i1 == nullptr || i2 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (i1->type != i2->type){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    //rval 2 cannot be const
+    if (i2->isConst){
+        return ERR_ILLEGAL_ARG;
+    }
+
+    KASMType t1, t2;
+    t1 = i1->type;
+    t2 = i2->type;
+
+    if (t1==KT_INT && t2==KT_INT){Mlt<int, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_FLOAT){Mlt<int, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_CHAR){Mlt<int, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_BYTE){Mlt<int, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_FLOAT && t2==KT_INT){Mlt<float, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_FLOAT){Mlt<float, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_CHAR){Mlt<float, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_BYTE){Mlt<float, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_CHAR && t2==KT_INT){Mlt<char, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_FLOAT){Mlt<char, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_CHAR){Mlt<char, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_BYTE){Mlt<char, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_BYTE && t2==KT_INT){Mlt<unsigned char, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_FLOAT){Mlt<unsigned char, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_CHAR){Mlt<unsigned char, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_BYTE){Mlt<unsigned char, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else {return ERR_ILLEGAL_ARG;}
+
+    return ERR_OK;
 }
 
 ErrCode _div (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    MemItem * i1 = inst->Rv0;
+    MemItem * i2 = inst->Rv1;
+
+    //two operators requires (value, register)
+    if (i1 == nullptr || i2 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (i1->type != i2->type){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    //rval 2 cannot be const
+    if (i2->isConst){
+        return ERR_ILLEGAL_ARG;
+    }
+
+    KASMType t1, t2;
+    t1 = i1->type;
+    t2 = i2->type;
+
+    if (t1==KT_INT && t2==KT_INT){Div<int, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_FLOAT){Div<int, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_CHAR){Div<int, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_BYTE){Div<int, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_FLOAT && t2==KT_INT){Div<float, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_FLOAT){Div<float, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_CHAR){Div<float, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_BYTE){Div<float, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_CHAR && t2==KT_INT){Div<char, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_FLOAT){Div<char, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_CHAR){Div<char, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_BYTE){Div<char, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_BYTE && t2==KT_INT){Div<unsigned char, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_FLOAT){Div<unsigned char, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_CHAR){Div<unsigned char, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_BYTE){Div<unsigned char, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else {return ERR_ILLEGAL_ARG;}
+
+    return ERR_OK;
 }
 
 ErrCode _pow (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    MemItem * i1 = inst->Rv0;
+    MemItem * i2 = inst->Rv1;
+
+    //two operators requires (value, register)
+    if (i1 == nullptr || i2 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (i1->type != i2->type){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    //rval 2 cannot be const
+    if (i2->isConst){
+        return ERR_ILLEGAL_ARG;
+    }
+
+    KASMType t1, t2;
+    t1 = i1->type;
+    t2 = i2->type;
+
+    if (t1==KT_INT && t2==KT_INT){Pow<int, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_FLOAT){Pow<int, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_CHAR){Pow<int, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_INT && t2==KT_BYTE){Pow<int, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_FLOAT && t2==KT_INT){Pow<float, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_FLOAT){Pow<float, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_CHAR){Pow<float, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_FLOAT && t2==KT_BYTE){Pow<float, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_CHAR && t2==KT_INT){Pow<char, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_FLOAT){Pow<char, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_CHAR){Pow<char, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_CHAR && t2==KT_BYTE){Pow<char, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else if (t1==KT_BYTE && t2==KT_INT){Pow<unsigned char, int>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_FLOAT){Pow<unsigned char, float>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_CHAR){Pow<unsigned char, char>(i1->data, i2->data, t1, t2);}
+    else if (t1==KT_BYTE && t2==KT_BYTE){Pow<unsigned char, unsigned char>(i1->data, i2->data, t1, t2);}
+
+    else {return ERR_ILLEGAL_ARG;}
+
+    return ERR_OK;
 }
 
 //logic
