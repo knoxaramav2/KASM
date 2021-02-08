@@ -19,9 +19,10 @@ vector<string> Utils::SplitString(string line){
 
     vector<string> ret;
     size_t idx = 0;
+    size_t len = line.size();
     string tmp;
     bool dQuote = false;
-    for (size_t i = 0; i <= line.size(); ++i){
+    for (size_t i = 0; i <= len; ++i){
         char c = line[i];
 
         //leave open for more split options
@@ -47,6 +48,12 @@ vector<string> Utils::SplitString(string line){
                     tmp = extractString(line, idx, i);
                     ret.push_back(tmp);
                     tmp.clear();
+                }
+            break;
+            case '\\':
+                if (line[i+1] == 'n'){
+                    line[i]='\r';
+                    line[i+1]='\n';
                 }
             break;
             default:
