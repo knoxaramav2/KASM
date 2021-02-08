@@ -60,6 +60,11 @@ namespace KASM{
     };
 
     struct Instruction{
+
+        #ifdef __DEBUG
+        std::string com;
+        #endif
+
         FileRaw * Source;
         KASMOp OpCode;
         MemItem * Rv0;
@@ -139,6 +144,8 @@ namespace KASM{
         void AddInstruction(Instruction*inst);
 
         CallFrame * GetCallFrame();
+        void AddCallFrame();
+        void PopCallFrame();
         KAsmRegisters * GetRegisters();
         InstructionProc GetInstProc(std::string proc);
         bool SetInstPntr(Instruction*);

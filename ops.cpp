@@ -146,6 +146,8 @@ bool InstructionFrame::Resolve(){
 
     //find label calls, associate with label fnc pointers
     _labelTable.ResolveTmp();
+    AddCallFrame();
+    _frameStack[0].Callee = nullptr;
 
     return true;
 }
@@ -173,6 +175,11 @@ void InstructionFrame::GetInstruction(string& line, FileRaw&src){
     Instruction * inst = new Instruction();
     inst->Source = &src;
     inst->Proc = _instructions.GetInstruction(com);
+
+    #ifdef __DEBUG
+    inst->com = com;
+    #endif
+
     ParseArguments(inst, terms);   
     AddInstruction(inst);
 }
@@ -247,6 +254,21 @@ CallFrame * InstructionFrame::GetCallFrame(){
     return &_frameStack[_frameStack.size()-1];
 }
 
+void InstructionFrame::AddCallFrame(){
+    CallFrame cf;
+    cf.Callee = _instPntr;
+    _frameStack.push_back(cf);
+}
+
+void InstructionFrame::PopCallFrame(){
+    CallFrame * cf = GetCallFrame();
+
+    if (cf == nullptr) {return;}
+
+    _instPntr = cf->Callee;
+    _frameStack.pop_back();
+}
+
 KAsmRegisters * InstructionFrame::GetRegisters(){
     return _reg;
 }
@@ -274,6 +296,11 @@ void InstructionFrame::SetExit(){
 
 void InstructionFrame::Next(){
     if (!Ready()) { return; }
+
+    #ifdef __DEBUG
+    //cout << "> " << _instPntr->com << endl;
+    #endif 
+
     ErrCode err = _instPntr->Proc(_instPntr, this);
 
     if (err != ERR_OK) {
@@ -282,10 +309,12 @@ void InstructionFrame::Next(){
         return;
     }
 
-    _instPntr = _instPntr->Next;
-    if (_instPntr == nullptr){
+    if (_instPntr == nullptr || _instPntr->Next == nullptr){
         _runState = -1;
+        return;
     }
+
+    _instPntr = _instPntr->Next;
 }
 
 void InstructionFrame::Test(){

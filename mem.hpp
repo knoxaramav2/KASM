@@ -60,6 +60,7 @@ namespace KASM{
         KT_RFR,     //float return
         KT_RBR,     //byte return
         KT_CTR,     //instruction counter,
+        KT_CMR,     //compare result
 
         //End
         KT_REG_CAP  //Not a register
@@ -84,6 +85,10 @@ namespace KASM{
     class CallFrame{
 
         public:
+
+        CallFrame();
+        ~CallFrame();
+
         Instruction * Callee;
         std::vector<MemItem> Stack;
 
