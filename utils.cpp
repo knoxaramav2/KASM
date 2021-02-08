@@ -20,16 +20,26 @@ vector<string> Utils::SplitString(string line){
     vector<string> ret;
     size_t idx = 0;
     string tmp;
+    bool dQuote = false;
     for (size_t i = 0; i <= line.size(); ++i){
         char c = line[i];
 
         //leave open for more split options
         switch(c){
+            case '"':
+            dQuote = !dQuote;
+            if (!dQuote){
+                tmp = extractString(line, idx, ++i);
+                ret.push_back(tmp);
+                tmp.clear();
+            }
+            break;
             case ' ':
             case '\t':
             case '\r':
             case '\n':
             case 0:
+                if (dQuote){continue;}
                 if (idx == i){
                     ++idx;
                     continue;
@@ -81,7 +91,7 @@ string Utils::ToLower(const char raw[]){
 
     for(size_t i=0; i < strlen(raw); ++i){
         char c = raw[i];
-        if (c>='a' && c<= 'z') {
+        if (c>='A' && c<= 'Z') {
             c += 0x20;
         }
 

@@ -85,7 +85,8 @@ namespace KASM{
 
         public:
 
-        Instruction* AddLabel(std::string name, FileRaw&raw, int instNo);
+        Instruction* AddLabel(std::string name, FileRaw&raw, int instNo, InstructionProc proc);
+        Instruction* FindLabel(std::string name);
 
     };
 
@@ -97,6 +98,7 @@ namespace KASM{
         Instruction * _instPntr;
 
         //state
+        int _runState=0;//0=not start, 1=running, 2=paused, 3=complete, -1=crash
         bool _scriptLoad = false;
         unsigned _scriptLevel = 0;
 
@@ -110,6 +112,7 @@ namespace KASM{
         LabelTable _labelTable;
         
         bool ParseArguments(Instruction* inst, std::vector<std::string>&args);
+        bool Resolve();
 
         int GetLabel(std::string& line, int lineNp, FileRaw&raw);
         void GetInstruction(std::string& line, FileRaw&raw);
@@ -125,8 +128,13 @@ namespace KASM{
 
         CallFrame * GetCallFrame();
         KAsmRegisters * GetRegisters();
+        InstructionProc GetInstProc(std::string proc);
 
         bool Ready();
+        void SetExit();
+
+        //Control steps
+        void Next();
 
         //#ifdef __DEBUG
         void Test();

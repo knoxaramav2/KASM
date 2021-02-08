@@ -107,7 +107,7 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
             item->isConst=true;
             item->type=KT_CHAR;
         } else if (IsAlpha(first)){//register
-            
+            item = _reg->GetRegister(str);
         } else if (IsNum(first)){//int,float
             if (str.find('.') == string::npos){
                 item->data = new float(atof(str.c_str()));
@@ -134,13 +134,24 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
     return true;
 }
 
+bool InstructionFrame::Resolve(){
+    //Find start label, set instruction pointer
+    Instruction* pntr = _labelTable.FindLabel(":start");
+    if (pntr == nullptr) {return false;}
+    _instPntr = pntr;
+
+    //find label calls, associate with label fnc pointers
+
+    return true;
+}
+
 //Creates a dummy instruction for jumps
 int InstructionFrame::GetLabel(string& line, int lineNo, FileRaw& raw){
     vector<string> terms = Utils::SplitString(line);
     Instruction* instPtr = nullptr;
 
     if (terms.size() != 1) { return 1; }
-    if (_labelTable.AddLabel(terms[0], raw, lineNo) == nullptr) {
+    if ((instPtr=_labelTable.AddLabel(terms[0], raw, lineNo, _instructions.GetInstruction(":"))) == nullptr) {
          return 2;
     } else {
         AddInstruction(instPtr);
@@ -210,6 +221,10 @@ void InstructionFrame::ProcessScripts(FileRaw&raw){
     }
 
     --_scriptLevel;
+
+    if (_scriptLevel==0){
+        Resolve();
+    }
 }
 
 void InstructionFrame::AddInstruction(Instruction*inst){
@@ -231,14 +246,37 @@ KAsmRegisters * InstructionFrame::GetRegisters(){
     return _reg;
 }
 
+InstructionProc InstructionFrame::GetInstProc(string proc){
+    return _instructions.GetInstruction(proc);
+}
+
 bool InstructionFrame::Ready(){
-    return _scriptLevel==0 && _scriptLoad;
+    return _scriptLevel==0 && _scriptLoad && _runState==0;
+}
+
+void InstructionFrame::SetExit(){
+    _runState = 3;
+}
+
+void InstructionFrame::Next(){
+    if (!Ready()) { return; }
+    ErrCode err = _instPntr->Proc(_instPntr, this);
+
+    if (err != ERR_OK) {
+        cout << "Err: " << err << endl;
+        return;
+    }
+
+    _instPntr = _instPntr->Next;
+    if (_instPntr == nullptr){
+        _runState = -1;
+    }
 }
 
 void InstructionFrame::Test(){
 
     cout << "START TEST:" <<endl;
-
+/*
     string r1 = "ri0";
     InstructionProc proc = _instructions.GetInstruction("mov");
     Instruction inst;
@@ -261,12 +299,12 @@ void InstructionFrame::Test(){
     inst2.Rv0->data=(void*) _reg->GetRegister(r1);
     inst2.Rv0->isConst = false;
     prnt(inst2, this);
-
+*/
     cout << endl << "END TEST:" << endl;
 }
 
 
-Instruction* LabelTable::AddLabel(string name, FileRaw&raw, int instNo){
+Instruction* LabelTable::AddLabel(string name, FileRaw&raw, int instNo, InstructionProc proc){
 
     Instruction* ret = nullptr;
     Label label;
@@ -280,9 +318,16 @@ Instruction* LabelTable::AddLabel(string name, FileRaw&raw, int instNo){
     }
 
     ret = new Instruction();
+    ret->Proc = proc;
     ret->OpCode = KT_LABEL;
     label.Inst = ret;
     _labels[name]=label;
-    
+
     return ret;
+}
+
+Instruction* LabelTable::FindLabel(string name){
+
+    if (_labels.find(name) == _labels.end()) {return nullptr;}
+    return _labels[name].Inst;
 }

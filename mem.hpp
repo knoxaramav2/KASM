@@ -74,6 +74,7 @@ namespace KASM{
         bool isConst;
 
         MemItem();
+        MemItem(KASMType type, bool isConst, void*data);
         ~MemItem();
     };
 
@@ -92,6 +93,7 @@ namespace KASM{
 
         //MemItem* _registers [KT_REG_CAP];
         std::map<std::string, MemItem*> _registers;
+        void LoadRegisters();
 
         public:
 
@@ -101,6 +103,7 @@ namespace KASM{
         void * GetValue(std::string& reg);
         bool SetValue(std::string& reg, void * data);
         MemItem * GetRegister(std::string& reg);
+        MemItem * GetRegister(const char reg[]);
     };
 
     class FlagController{

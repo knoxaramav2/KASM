@@ -1,5 +1,6 @@
 #hw.kasm
 
 :start
-    mov "Hello world" RS0
+    mov "Hello world!" RS0
     prnt RS0
+    exit

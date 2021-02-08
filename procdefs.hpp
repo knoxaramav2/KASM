@@ -6,7 +6,7 @@
 namespace KASM{
     struct Instruction;
     class InstructionFrame;
-    typedef ErrCode (*InstructionProc)(Instruction&, InstructionFrame*);
+    typedef ErrCode (*InstructionProc)(Instruction*, InstructionFrame*);
 }
 
 #endif

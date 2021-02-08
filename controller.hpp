@@ -10,6 +10,8 @@ namespace KASM{
         KAsmRegisters _reg;
         InstructionFrame _instFrame;
 
+        int _state = 0;
+
         public:
 
         AsmController();
