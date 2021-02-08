@@ -141,6 +141,7 @@ bool InstructionFrame::Resolve(){
     _instPntr = pntr;
 
     //find label calls, associate with label fnc pointers
+    _labelTable.ResolveTmp();
 
     return true;
 }
@@ -331,4 +332,30 @@ Instruction* LabelTable::FindLabel(string name){
 
     if (_labels.find(name) == _labels.end()) {return nullptr;}
     return _labels[name].Inst;
+}
+
+void LabelTable::AddTmpJmpInst(string name, Instruction*inst){
+    TmpLabel lbl;
+    lbl.Name = name;
+    lbl.Inst = inst;
+
+    _tmp.push_back(lbl);
+}
+
+bool LabelTable::ResolveTmp(){
+
+    for(size_t i=0; i < _tmp.size(); ++i){
+        TmpLabel lbl = _tmp[i];
+        
+        if (_labels.find(lbl.Name) == _labels.end()){
+            return false;
+        }
+        
+        Label l = _labels[lbl.Name];
+        lbl.Inst->Rv0->data = l.Inst;
+        lbl.Inst->Rv0->type=KT_REF;
+    }
+
+    _tmp.clear();
+    return true;
 }

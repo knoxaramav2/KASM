@@ -27,6 +27,9 @@ vector<string> Utils::SplitString(string line){
 
         //leave open for more split options
         switch(c){
+            case '#':
+                return ret;
+            break;
             case '"':
             dQuote = !dQuote;
             if (!dQuote){

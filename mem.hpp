@@ -11,7 +11,8 @@ namespace KASM{
         KT_FLOAT,
         KT_BYTE,    //signed byte
         KT_CHAR,    //unsigned byte
-        KT_STRING
+        KT_STRING,
+        KT_REF      //inst ref
     };
 
     //Rx0-Rx3 preserved

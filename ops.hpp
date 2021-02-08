@@ -26,7 +26,7 @@ namespace KASM{
         KT_DIV,     //div
         KT_POW,     //pow
 
-        //Logic
+        //Logic (check ops.cpp resolve, will check between jlss and jneql)
         KT_CMP,     //cmp
         KT_JLSS,    //jl
         KT_JGTR,    //jg
@@ -79,15 +79,26 @@ namespace KASM{
         int LineNo;
     };
 
+
     class LabelTable{
 
+        //placeholders for 
+        //jmp instruction labels
+        struct TmpLabel{
+            std::string Name;
+            Instruction*Inst;
+        };
+
         std::map<std::string, Label> _labels;
+        std::vector<TmpLabel> _tmp;  
 
         public:
 
         Instruction* AddLabel(std::string name, FileRaw&raw, int instNo, InstructionProc proc);
         Instruction* FindLabel(std::string name);
 
+        void AddTmpJmpInst(std::string name, Instruction*inst);
+        bool ResolveTmp();
     };
 
 
