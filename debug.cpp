@@ -21,6 +21,6 @@ void Debug::WriteErr(int line, std::string&src, string& text, const char* msg){
     string shortName = src.substr(cutoff+1, src.size());
 
     ostringstream ss;
-    ss << shortName.c_str() << ":" << line << " \""<<text.c_str()<<"\". " << msg;
+    ss << shortName.c_str() << ":" << line+1 << " \""<<text.c_str()<<"\". " << msg;
     cout << ss.str() << endl;
 }

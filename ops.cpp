@@ -264,6 +264,7 @@ void InstructionFrame::Next(){
 
     if (err != ERR_OK) {
         cout << "Err: " << err << endl;
+        _runState = 3;
         return;
     }
 

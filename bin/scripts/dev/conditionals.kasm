@@ -1,14 +1,14 @@
 #test conditionals and jumps
 
-:test #used as function
-    add -1 ri0
-    prnt ri0
-    ret
-
 :start
     mov 5 ri0
     :loop #used as normal jump label
     jmp :test #goto test
     cmp ri0 0 #if (ri0 == 0)
     jneql :loop #loop until ri0 == 0
+    ret
+
+:test #used as function
+    add -1 ri0
+    prnt ri0
     ret
