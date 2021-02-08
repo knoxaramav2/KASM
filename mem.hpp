@@ -80,10 +80,12 @@ namespace KASM{
     };
 
     //Stack frame
+    struct Instruction;
     class CallFrame{
 
         public:
-        std::vector<MemItem> stack;
+        Instruction * Callee;
+        std::vector<MemItem> Stack;
 
         MemItem Pop();
         void Push(KASMType type, void * data, bool isConst);

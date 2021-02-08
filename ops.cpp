@@ -109,7 +109,7 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
         } else if (IsAlpha(first)){//register
             item = _reg->GetRegister(str);
         } else if (IsNum(first)){//int,float
-            if (str.find('.') == string::npos){
+            if (str.find('.') != string::npos){
                 item->data = new float(atof(str.c_str()));
                 item->type = KT_FLOAT;
             } else {
@@ -118,7 +118,11 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
             } 
 
             item->isConst = true;
-        };
+        } else if (first==':'){
+            item->isConst = true;
+            item->type = KT_REF;
+            _labelTable.AddTmpJmpInst(str, inst);
+        }
 
         if (inst->Rv0 == nullptr){
             inst->Rv0 = item;
@@ -251,6 +255,15 @@ InstructionProc InstructionFrame::GetInstProc(string proc){
     return _instructions.GetInstruction(proc);
 }
 
+bool InstructionFrame::SetInstPntr(Instruction*inst){
+
+    if (inst == nullptr) {return false;}
+
+    _instPntr = inst;
+
+    return true;
+}
+
 bool InstructionFrame::Ready(){
     return _scriptLevel==0 && _scriptLoad && _runState==0;
 }
@@ -353,7 +366,7 @@ bool LabelTable::ResolveTmp(){
         
         Label l = _labels[lbl.Name];
         lbl.Inst->Rv0->data = l.Inst;
-        lbl.Inst->Rv0->type=KT_REF;
+        lbl.Inst->Rv0->type = KT_REF;
     }
 
     _tmp.clear();

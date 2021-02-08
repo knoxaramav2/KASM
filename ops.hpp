@@ -36,6 +36,7 @@ namespace KASM{
         //Control
         KT_JMP,     //jmp
         KT_Call,    //call
+        KT_RET,     //ret
 
         //Stack
         KT_PUSH,    //push
@@ -140,6 +141,7 @@ namespace KASM{
         CallFrame * GetCallFrame();
         KAsmRegisters * GetRegisters();
         InstructionProc GetInstProc(std::string proc);
+        bool SetInstPntr(Instruction*);
 
         bool Ready();
         void SetExit();

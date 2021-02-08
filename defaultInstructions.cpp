@@ -102,11 +102,34 @@ ErrCode _jneql (Instruction*inst, InstructionFrame*frame){
 
 //control
 ErrCode _jmp (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    
+    if (inst->Rv0 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (inst->Rv0->type != KT_REF){
+        return ERR_TYPE_MISMATCH;
+    }
+    
+    frame->SetInstPntr((Instruction*)inst->Rv0->data);
+
+    return ERR_OK;
 }
 
 ErrCode _call (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+
+    if (inst->Rv0 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (inst->Rv0->type != KT_REF){
+        return ERR_TYPE_MISMATCH;
+    }
+    
+    frame->SetInstPntr((Instruction*)inst->Rv0->data);
+
+    return ERR_OK;
+
+}
+
+ErrCode _ret (Instruction*inst, InstructionFrame*frame){
+    return ERR_OK;
 }
 
 //stack
@@ -175,6 +198,7 @@ void KASM::InitInstructionPntrs(InstructionRegistry* reg){
 
     reg->RegisterInstruction("jmp", _jmp);
     reg->RegisterInstruction("call", _call);
+    reg->RegisterInstruction("ret", _ret);
 
     reg->RegisterInstruction("push", _push);
     reg->RegisterInstruction("pop", _pop);
