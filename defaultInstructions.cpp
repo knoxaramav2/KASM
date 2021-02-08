@@ -244,15 +244,33 @@ ErrCode _jmp (Instruction*inst, InstructionFrame*frame){
 }
 
 ErrCode _jlss (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+   
+    MemItem * reg = frame->GetRegisters()->GetRegister("cmr");
+    if (*(int*)reg->data < 0){
+        return _jmp(inst, frame);
+    }
+
+    return ERR_OK;
 }
 
 ErrCode _jgtr (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    
+    MemItem * reg = frame->GetRegisters()->GetRegister("cmr");
+    if (*(int*)reg->data > 0){
+        return _jmp(inst, frame);
+    }
+
+    return ERR_OK;
 }
 
 ErrCode _jeql (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    
+    MemItem * reg = frame->GetRegisters()->GetRegister("cmr");
+    if (*(int*)reg->data == 0){
+        return _jmp(inst, frame);
+    }
+
+    return ERR_OK;
 }
 
 ErrCode _jneql (Instruction*inst, InstructionFrame*frame){
@@ -287,11 +305,29 @@ ErrCode _ret (Instruction*inst, InstructionFrame*frame){
 
 //stack
 ErrCode _push (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    
+    if (inst->Rv0 == nullptr) { return ERR_MISSING_ARG;}
+
+    frame->GetCallFrame()->Push(
+        inst->Rv0->type,
+        inst->Rv0->data,
+        inst->Rv0->isConst
+    );
+    
+    return ERR_OK;
 }
 
 ErrCode _pop (Instruction*inst, InstructionFrame*frame){
-    return ERR_UNIMPLEMENTED;
+    
+    if (inst->Rv0 == nullptr) {return ERR_MISSING_ARG;}
+    else if (inst->Rv0->isConst){return ERR_ILLEGAL_ARG;}
+    CallFrame * cf = frame->GetCallFrame();
+    if (cf == nullptr || cf->Stack.size() == 0) {return ERR_EMPTY_STACK;}
+
+    MemItem * mi = cf->Pop();
+    inst->Rv0 = mi;
+
+    return ERR_OK;
 }
 
 //High level

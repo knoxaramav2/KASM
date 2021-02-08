@@ -90,9 +90,9 @@ namespace KASM{
         ~CallFrame();
 
         Instruction * Callee;
-        std::vector<MemItem> Stack;
+        std::vector<MemItem*> Stack;
 
-        MemItem Pop();
+        MemItem* Pop();
         void Push(KASMType type, void * data, bool isConst);
     };
 

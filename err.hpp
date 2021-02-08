@@ -13,6 +13,7 @@ namespace KASM{
         ERR_TYPE_MISMATCH,
         ERR_UNIMPLEMENTED,
         ERR_ILLEGAL_ARG,
+        ERR_EMPTY_STACK,
         
         //Internal errors
         ERR_INTERNAL

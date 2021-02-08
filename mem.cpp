@@ -99,9 +99,22 @@ CallFrame::CallFrame(){
 }
 
 CallFrame::~CallFrame(){
-
+    for(size_t i = 0; i < Stack.size(); ++i){
+        Stack.pop_back();
+    }
 }
 
+MemItem * CallFrame::Pop(){
+    if (Stack.size() == 0) {return nullptr;}
+    MemItem * mi = Stack[Stack.size()-1];
+    Stack.pop_back();
+    return mi;
+}
+
+void CallFrame::Push(KASMType type, void*data, bool isConst){
+    MemItem* mi = new MemItem(type, isConst, data);
+    Stack.push_back(mi);
+}
 
 
 
