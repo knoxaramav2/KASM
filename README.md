@@ -2,6 +2,26 @@
 A proof of concept library for extendable runtime assembly-like language. Allows for registration of custom functions beyond the base language. See below for base API.
 
 
+## Roadmap
+Goal | Progress
+---- | --------
+Linux Support | Priority
+Windows Support | Not started
+Base Instructions | Done
+Call Frames | Done
+Registers | Done
+Function Registration | In progress
+Heap Memory | Not started
+Graphics Library | In progress
+Special graphics registers | Not started
+Pointer support | Not started
+Keyboard support | In progress
+Terminal windows | Not started
+Terminal color | Not started
+Multithread support | Not started
+
+
+
 ## Compilation:
 
 ### LINUX:

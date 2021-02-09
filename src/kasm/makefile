@@ -6,7 +6,7 @@ OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
-SUBDIRS=test
+SUBDIRS=
 SRC= defaultInstructions.cpp ops.cpp instructionRegistry.cpp mem.cpp \
 	controller.cpp crossplat.cpp debug.cpp utils.cpp \
 	
