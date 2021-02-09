@@ -422,6 +422,17 @@ ErrCode _call (Instruction*inst, InstructionFrame*frame){
 }
 
 ErrCode _ret (Instruction*inst, InstructionFrame*frame){
+    
+    if (inst->Rv0 == nullptr){
+
+    } else if (inst->Rv0->type == KT_INT){
+        MemItem * mi = frame->GetRegisters()->GetRegister("rir");
+        *(int*)mi->data = *((int*)inst->Rv0->data);
+    } else if (inst->Rv0->type == KT_FLOAT){
+        MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
+        *(float*)mi->data = *((float*)inst->Rv0->data);
+    }
+    
     frame->PopCallFrame();
     return ERR_OK;
 }

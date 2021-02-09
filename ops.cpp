@@ -1,6 +1,7 @@
 #include "ops.hpp"
 #include "debug.hpp"
 #include "utils.hpp"
+#include "crossplat.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -185,9 +186,24 @@ void InstructionFrame::GetInstruction(string& line, FileRaw&src){
 }
 
 void InstructionFrame::ProcessPreProc(string& line){
-    return;
-    //cout << "@ PREPROC: " << line << endl;
     vector<string> terms = Utils::SplitString(line);
+
+    string directive = terms[0];
+    terms.erase(terms.begin());
+
+    if (directive == "$import"){
+        if (terms.size() == 1){
+            string path = KCompat::FormatPath(terms[0]);
+            FileRaw fr(path);
+            ProcessScripts(fr);
+        } else {
+            cout << "Import directive must have 1 argument." << endl;
+            return;
+        }
+    } else {
+        cout << "Directive not recognized: " << directive << endl;
+        return;
+    }
 }
 
 void InstructionFrame::ProcessInlined(string& line){

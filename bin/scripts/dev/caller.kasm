@@ -1,0 +1,9 @@
+#import another file
+
+$import scripts/dev/import.kasm
+
+:start
+    prnt "Original\n"
+    call :impfnc
+    prnt "End\n"
+    exit

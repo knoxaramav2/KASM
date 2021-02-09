@@ -1,10 +1,6 @@
 #test import script
 
 #visible from test.kasm
-:func
-    mov 3.41 rf0
-    ret 2
-
-:func2
-    mov 4.2 rf0
-    ret 3
+:impfnc
+    prnt "Called function\n"
+    ret
