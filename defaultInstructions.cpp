@@ -454,6 +454,22 @@ ErrCode _pop (Instruction*inst, InstructionFrame*frame){
 }
 
 //High level
+
+ErrCode _getl (Instruction*inst, InstructionFrame*frame){
+
+    if (inst->Rv0 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (inst->Rv0->type != KT_STRING){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    string tmp;
+    getline(cin, tmp);
+    *(string*)inst->Rv0->data = tmp;
+
+    return ERR_OK;
+}
+
 ErrCode _prnt (Instruction*inst, InstructionFrame*frame){
 
     //TODO - replace with crossplat UI calls
@@ -515,6 +531,7 @@ void KASM::InitInstructionPntrs(InstructionRegistry* reg){
     reg->RegisterInstruction("push", _push);
     reg->RegisterInstruction("pop", _pop);
 
+    reg->RegisterInstruction("getl", _getl);
     reg->RegisterInstruction("prnt", _prnt);
     reg->RegisterInstruction("goxy", _goxy);
     reg->RegisterInstruction("clr", _clr);

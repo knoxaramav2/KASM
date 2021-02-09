@@ -9,7 +9,7 @@ int main(int argc, char ** argv){
     cout << "Start Test" << endl;
 
     KASM::AsmController controller;
-    controller.LoadScript("scripts/dev/conditionals.kasm");
+    controller.LoadScript("scripts/dev/input.kasm");
     //controller.Test();
     controller.Run();
 

@@ -43,6 +43,7 @@ namespace KASM{
         KT_POP,     //pop
 
         //High level
+        KT_GETL,    //getl
         KT_PRINT,   //prnt
         KT_GOXY,    //goxy
         KT_CLRSCRN, //clr

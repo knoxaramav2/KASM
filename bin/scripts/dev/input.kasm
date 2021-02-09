@@ -1,0 +1,8 @@
+:start
+    prnt ">>: "
+    getl RS0
+    prnt "\n"
+    prnt "You said: "
+    prnt RS0
+    prnt "\n"
+    exit

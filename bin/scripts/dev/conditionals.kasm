@@ -11,4 +11,5 @@
 :test #used as function
     add -1 ri0
     prnt ri0
+    prnt "\n"
     ret
