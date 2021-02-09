@@ -9,13 +9,12 @@ DBGFLAG=-D__DEBUG
 SUBDIRS=
 SRC= drawable.cpp
 OBJ_FILES = $(SRC:.cpp=.o)
-
+EXPORT_PATH=../../bin/
 
 ifeq ($(shell uname), Linux)
 	FixPath = $1
 	PLATFORM = -D__LINUX
 	OSMODE = -DBITMODE=$(BITVRS)
-	EXPORT_PATH=../bin/
 	EXT=.a
 	RUNPATH=./$(EXPEXPORT_PATHORT_PTH)$(OUT)$(EXT)
 	TERMLIB=-lncurses
@@ -24,7 +23,6 @@ else
 	FixPath = $(subst /,\,$1)
 	PLATFORM = -D__WINDOWS
 	OSMODE = -DBITMODE=$(BITVRS)
-	EXPORT_PATH=../bin/
 	EXT=.dll
 	RUNPATH=$(EXPORT_PATH)$(OUT)$(EXT)
 endif
