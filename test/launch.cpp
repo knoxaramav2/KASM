@@ -1,4 +1,4 @@
-#include "../kasm.hpp"
+#include "../src/kasm.hpp"
 
 #include <iostream>
 
