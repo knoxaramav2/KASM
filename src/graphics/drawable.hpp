@@ -3,4 +3,10 @@
 
 #include "../kasm/kasm.hpp"
 
+namespace KASM{
+
+    ErrCode _pushWindow(Instruction*, InstructionFrame*);
+
+}
+
 #endif

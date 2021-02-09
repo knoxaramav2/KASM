@@ -111,6 +111,7 @@ namespace KASM{
 
     class InstructionFrame{
         friend struct Instruction;
+        friend class AsmController;
 
         Instruction * _base;
         Instruction * _instPntr;

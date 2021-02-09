@@ -18,7 +18,7 @@ namespace KASM{
         ~AsmController();
 
         void LoadScript(std::string path);
-        bool RegisterCommand(InstructionProc proc);
+        bool RegisterCommand(std::string name, InstructionProc proc);
         bool Run();
 
         void PauseExecution();

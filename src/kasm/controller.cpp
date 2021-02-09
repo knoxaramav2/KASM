@@ -21,9 +21,9 @@ void AsmController::LoadScript(string path){
     _instFrame.ProcessScripts(fr);
 }
 
-bool AsmController::RegisterCommand(InstructionProc proc){
+bool AsmController::RegisterCommand(string name, InstructionProc proc){
 
-    return true;
+    return _instFrame._instructions.RegisterInstruction(name, proc);
 }
 
 bool AsmController::Run(){
