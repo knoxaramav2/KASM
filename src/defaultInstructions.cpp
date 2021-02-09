@@ -431,6 +431,12 @@ ErrCode _ret (Instruction*inst, InstructionFrame*frame){
     } else if (inst->Rv0->type == KT_FLOAT){
         MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
         *(float*)mi->data = *((float*)inst->Rv0->data);
+    } else if (inst->Rv0->type == KT_CHAR){
+        MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
+        *(char*)mi->data = *((char*)inst->Rv0->data);
+    } else if (inst->Rv0->type == KT_BYTE){
+        MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
+        *(unsigned char*)mi->data = *((unsigned char*)inst->Rv0->data);
     }
     
     frame->PopCallFrame();
