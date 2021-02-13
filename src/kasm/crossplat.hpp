@@ -4,7 +4,7 @@
 #include <string>
 
 #ifdef __WINDOWS
-    #error Windows support not implemented yet
+    //#error Windows support not implemented yet
     //#define EL "\r\n"
 #else
     #define EL "\n"

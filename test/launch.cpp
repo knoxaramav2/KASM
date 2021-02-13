@@ -10,7 +10,6 @@ int main(int argc, char ** argv){
 
     KASM::AsmController controller;
     controller.LoadScript("scripts/dev/caller.kasm");
-    //controller.Test();
     controller.Run();
 
     cout << endl << endl << "END" << endl;
