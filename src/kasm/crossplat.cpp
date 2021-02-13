@@ -22,7 +22,10 @@ string KCompat::FormatPath(string path){
             ret = string(pathBuff);
         }
     #else
-        
+        TCHAR pathBuff[MAX_PATH];
+        GetModuleFileName(nullptr, pathBuff, MAX_PATH);
+        ret = pathBuff;
+
     #endif
 
     size_t dirszf = ret.find_last_of('/');
