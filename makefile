@@ -9,6 +9,8 @@ DBGFLAG=-D__DEBUG
 OSMODE = -DBITMODE=$(BITVRS)
 CLEANEXT = o a dll exe
 
+FILE = scripts/dev/conditionals.kasm
+
 ifeq ($(shell uname), Linux)
 	PLATFORM = -D__LINUX
 	EXT=
@@ -40,4 +42,4 @@ clean:
 
 .PHONY: run
 run:
-	./bin/dev$(EXT)
+	./bin/dev$(EXT) $(FILE)

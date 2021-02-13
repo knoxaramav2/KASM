@@ -6,7 +6,8 @@ DBGFLAGS = -D__DEBUG
 OUT = dev
 CLEANEXT = o a
 BITVRS=64
-SRC= launch.cpp
+SRC = launch.cpp
+FILE = scripts/dev/conditionals.kasm
 
 ifeq ($(shell uname), Linux)
 	FixPath = $1
@@ -31,7 +32,7 @@ all:
 
 .PHONY: run
 run:
-	$(RUNPATH)
+	$(RUNPATH) $(FILE)
 
 .PHONY: clean
 clean:

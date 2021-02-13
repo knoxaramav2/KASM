@@ -68,7 +68,7 @@ FileRaw::FileRaw(string filePath){
         lines.push_back(line);
     }
 
-    cout << endl;
+     << endl;
 
     file.close();
 }

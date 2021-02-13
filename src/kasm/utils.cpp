@@ -68,9 +68,8 @@ vector<string> Utils::SplitString(string line){
     for(size_t i=0; i<ret.size(); ++i){
         //cout << "[" << ret[i] << "] ";
     }
-#endif
-
     cout << endl;
+#endif
 
     return ret;
 }
