@@ -12,7 +12,11 @@ namespace KASM{
         KT_BYTE,    //signed byte
         KT_CHAR,    //unsigned byte
         KT_STRING,
-        KT_REF      //inst ref
+        KT_REF,     //inst ref
+        KT_NA,      //illegal
+
+
+        KT_SPECIAL, //start index for custom
     };
 
     //Rx0-Rx3 preserved

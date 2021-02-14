@@ -1,0 +1,21 @@
+#test passing args by stack
+
+:start
+    mov 5 ri0
+    mov 6.7 rf0
+    push ri0
+    push rf0
+    call :fnc
+    prnt rfr
+    exit 0
+
+#C equivalent
+#
+#float fnc(float a, int b){}
+#   return a+b;
+#}
+:fnc
+    pop rf1
+    pop ri1
+    add ri1 rf1
+    ret rf1

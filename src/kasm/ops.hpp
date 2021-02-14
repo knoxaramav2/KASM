@@ -154,8 +154,9 @@ namespace KASM{
         InstructionProc GetInstProc(std::string proc);
         bool SetInstPntr(Instruction*);
 
-        MemItem Pop();
-        void Push(MemItem);
+        MemItem PopStack();
+        void PushStack(MemItem);
+        KASMType PeekStack();
 
         bool Ready();
         void SetExit();

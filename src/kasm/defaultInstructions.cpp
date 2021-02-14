@@ -128,8 +128,6 @@ ErrCode _add (Instruction*inst, InstructionFrame*frame){
     //two operators requires (value, register)
     if (i1 == nullptr || i2 == nullptr){
         return ERR_MISSING_ARG;
-    } else if (i1->type != i2->type){
-        return ERR_TYPE_MISMATCH;
     }
 
     //rval 2 cannot be const
@@ -173,8 +171,6 @@ ErrCode _mult (Instruction*inst, InstructionFrame*frame){
     //two operators requires (value, register)
     if (i1 == nullptr || i2 == nullptr){
         return ERR_MISSING_ARG;
-    } else if (i1->type != i2->type){
-        return ERR_TYPE_MISMATCH;
     }
 
     //rval 2 cannot be const
@@ -218,8 +214,6 @@ ErrCode _div (Instruction*inst, InstructionFrame*frame){
     //two operators requires (value, register)
     if (i1 == nullptr || i2 == nullptr){
         return ERR_MISSING_ARG;
-    } else if (i1->type != i2->type){
-        return ERR_TYPE_MISMATCH;
     }
 
     //rval 2 cannot be const
@@ -263,8 +257,6 @@ ErrCode _pow (Instruction*inst, InstructionFrame*frame){
     //two operators requires (value, register)
     if (i1 == nullptr || i2 == nullptr){
         return ERR_MISSING_ARG;
-    } else if (i1->type != i2->type){
-        return ERR_TYPE_MISMATCH;
     }
 
     //rval 2 cannot be const
@@ -313,8 +305,6 @@ ErrCode _cmp (Instruction*inst, InstructionFrame*frame){
     //two operators requires (value, register)
     if (i1 == nullptr || i2 == nullptr){
         return ERR_MISSING_ARG;
-    } else if (i1->type != i2->type){
-        return ERR_TYPE_MISMATCH;
     }
 
     KASMType t1, t2;
@@ -432,10 +422,10 @@ ErrCode _ret (Instruction*inst, InstructionFrame*frame){
         MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
         *(float*)mi->data = *((float*)inst->Rv0->data);
     } else if (inst->Rv0->type == KT_CHAR){
-        MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
+        MemItem * mi = frame->GetRegisters()->GetRegister("rbr");
         *(char*)mi->data = *((char*)inst->Rv0->data);
     } else if (inst->Rv0->type == KT_BYTE){
-        MemItem * mi = frame->GetRegisters()->GetRegister("rfr");
+        MemItem * mi = frame->GetRegisters()->GetRegister("rbr");
         *(unsigned char*)mi->data = *((unsigned char*)inst->Rv0->data);
     }
     
@@ -448,24 +438,21 @@ ErrCode _push (Instruction*inst, InstructionFrame*frame){
     
     if (inst->Rv0 == nullptr) { return ERR_MISSING_ARG;}
 
-    frame->GetCallFrame()->Push(
-        inst->Rv0->type,
-        inst->Rv0->data,
-        inst->Rv0->isConst
-    );
+    frame->PushStack(*inst->Rv0);
     
     return ERR_OK;
 }
 
 ErrCode _pop (Instruction*inst, InstructionFrame*frame){
     
+    KASMType type = frame->PeekStack();
+
     if (inst->Rv0 == nullptr) {return ERR_MISSING_ARG;}
     else if (inst->Rv0->isConst){return ERR_ILLEGAL_ARG;}
-    CallFrame * cf = frame->GetCallFrame();
-    if (cf == nullptr || cf->Stack.size() == 0) {return ERR_EMPTY_STACK;}
+    else if (type == KT_NA){return ERR_EMPTY_STACK;}
+    else if (type != inst->Rv0->type) {return ERR_TYPE_MISMATCH;}    
 
-    MemItem * mi = cf->Pop();
-    inst->Rv0 = mi;
+    *(inst->Rv0) = frame->PopStack();
 
     return ERR_OK;
 }

@@ -306,7 +306,7 @@ bool InstructionFrame::SetInstPntr(Instruction*inst){
     return true;
 }
 
-MemItem InstructionFrame::Pop(){
+MemItem InstructionFrame::PopStack(){
     MemItem mi;
 
     if (_stackFrame.size() == 0){
@@ -318,8 +318,13 @@ MemItem InstructionFrame::Pop(){
     return mi;
 }
 
-void InstructionFrame::Push(MemItem mi){
+void InstructionFrame::PushStack(MemItem mi){
     _stackFrame.push_back(mi);
+}
+
+KASMType InstructionFrame::PeekStack(){
+    if (_stackFrame.size() == 0) {return KT_NA;}
+    return _stackFrame[_stackFrame.size()-1].type;
 }
 
 bool InstructionFrame::Ready(){

@@ -8,7 +8,7 @@ int main(int argc, char ** argv){
 
     string file = "scripts/dev/caller.kasm";
 
-    if (argc == 2){
+    if (argc >= 2){
         file = argv[1];
     }
 

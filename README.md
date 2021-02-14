@@ -9,7 +9,7 @@ Goal | Progress
 ---- | --------
 Linux Support | Priority
 Windows Support | In Progress
-Base Instructions | Done
+Base Instructions | In Progress
 Call Frames | Done
 Global Stack | In Progress
 Registers | Done
@@ -29,7 +29,6 @@ Heap Memory | Not started
 > MP3 Support | Not Started
 ```Multithread Support``` | Not started
 > Thread Controller | Not Started
-
 
 
 ## Compilation:
@@ -60,8 +59,10 @@ BYTE (unsigned) | 1
 CHAR (signed) | 1
 STRING | NA
 Ref | (internal)
+Custom | NA
 
-### API:
+### Basic API:
+##### See README.md of other sub-libraries for their respective API extensions.
 (Note: String support only where specified. String/Numeric conversions will otherwise result in type mismatch error.)
 Assigns to right value:
 Constant = cn
@@ -86,13 +87,10 @@ jneql       | lb | | | Jump to label if cmr is != 0.
 jmp         | lb | | | Jump to label.
 call        | lb | | | Push new call frame and jump to function.
 ret         | cn/rg ? | | | Pop call frame and return to callee. Optional return value.
-push        | cn/rg | | | Push value to current call frame stack.
-pop         | rg | | | Pop current stack value and store in register.
+push        | cn/rg | | | Push value to stack.
+pop         | rg | | | Pop last stack value and store in register.
 getl        | rg | | | Read user input to string register.
 prnt        | cn/rg
-goxy        | cn/rg | cn/rg | | Set console cursor to x (arg0) y (arg1) coordinate.
-clr         | | | | Clear console.
-
 
 
 ### Registers:
