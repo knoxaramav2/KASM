@@ -13,22 +13,22 @@ Base Instructions | In Progress
 Call Frames | Done
 Global Stack | In Progress
 Registers | Done
-Custom Registers | Not Started
-Function Registration | In progress
+Custom Registers | In Progress
+Function Registration | In Progress
 Heap Memory | Not started
-```Graphics Library``` | In progress
-> Special graphics registers | Not started
-> Pointer support | Not started
-> Keyboard support | In progress
-> Terminal windows | Not Started
-> Terminal color | Not Started
-> Terminal shapes | Not Started
+```Graphics Library``` | In Progress
+Special graphics registers | Not started
+Pointer support | Not started
+Keyboard support | In Progress
+Terminal windows | Not Started
+Terminal color | Not Started
+Terminal shapes | Not Started
 ```Audio Library``` | Not Started
-> Beep Support | Not Started
-> WAV Support | Not Started
-> MP3 Support | Not Started
+Beep Support | Not Started
+WAV Support | Not Started
+MP3 Support | Not Started
 ```Multithread Support``` | Not started
-> Thread Controller | Not Started
+Thread Controller | Not Started
 
 
 ## Compilation:

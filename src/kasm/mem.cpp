@@ -12,6 +12,14 @@ KAsmRegisters::KAsmRegisters(){
 
 KAsmRegisters::~KAsmRegisters(){
 
+    //Clear defaults
+
+    //Clear custom
+    for(size_t i=0; i<_custRegInfo.size(); ++i){
+        KCustomRegInfo ri = _custRegInfo[i];
+        ::operator delete(ri.Item);
+    }
+
 }
 
 void KAsmRegisters::LoadRegisters(){
@@ -76,6 +84,29 @@ MemItem * KAsmRegisters::GetRegister(const char reg[]){
     string str(reg);
     return GetRegister(str);
 }
+
+bool KAsmRegisters::AddCustom(string&name, size_t sz){
+
+    string lwr = Utils::ToLower(name);
+    if (_registers.find(lwr) == _registers.end()){
+        return false;
+    }
+
+    MemItem * mi = new MemItem();
+    mi->type = (KASMType) _registers.size();
+    mi->isConst = false;
+    mi->data = ::operator new(sz);
+
+    KCustomRegInfo rgInfo;
+    rgInfo.Item = mi;
+    rgInfo.Size = sz;
+
+    _registers[lwr] = mi;
+    _custRegInfo.push_back(rgInfo);
+
+    return true;
+}
+
 
 MemItem::MemItem(){
     type = KT_INT;

@@ -102,11 +102,19 @@ namespace KASM{
         void Push(KASMType type, void * data, bool isConst);
     };
 
+    //For safely freeing custom registers
+    struct KCustomRegInfo{
+        MemItem * Item;
+        size_t Size;
+    };
+
     //Registers
     class KAsmRegisters{
 
         //MemItem* _registers [KT_REG_CAP];
         std::map<std::string, MemItem*> _registers;
+        std::vector<KCustomRegInfo> _custRegInfo;
+        
         void LoadRegisters();
 
         public:
@@ -118,6 +126,8 @@ namespace KASM{
         bool SetValue(std::string& reg, void * data);
         MemItem * GetRegister(std::string& reg);
         MemItem * GetRegister(const char reg[]);
+
+        bool AddCustom(std::string&, size_t );
     };
 
     class FlagController{

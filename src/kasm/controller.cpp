@@ -26,6 +26,11 @@ bool AsmController::RegisterCommand(string name, InstructionProc proc){
     return _instFrame._instructions.RegisterInstruction(name, proc);
 }
 
+bool AsmController::RegisterRegister(string name, size_t sz){
+
+    return _reg.AddCustom(name, sz);
+}
+
 bool AsmController::Run(){
 
     if (!_instFrame.Ready()){
