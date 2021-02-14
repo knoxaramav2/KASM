@@ -7,7 +7,7 @@ CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
 SUBDIRS=
-SRC= defaultInstructions.cpp ops.cpp instructionRegistry.cpp mem.cpp \
+SRC= defaultInstructions.cpp mem.cpp ops.cpp instructionRegistry.cpp \
 	controller.cpp crossplat.cpp debug.cpp utils.cpp \
 	
 OBJ_FILES = $(SRC:.cpp=.o)

@@ -68,8 +68,6 @@ FileRaw::FileRaw(string filePath){
         lines.push_back(line);
     }
 
-     << endl;
-
     file.close();
 }
 
@@ -81,6 +79,12 @@ Instruction::Instruction(){
     Proc = nullptr;
 }
 
+Instruction::~Instruction(){
+    
+    //KASM::ClearMemItem(Rv0);
+    //KASM::ClearMemItem(Rv1);
+    //KASM::ClearMemItem(Rv2);
+}
 
 InstructionFrame::InstructionFrame(KAsmRegisters&reg){
     _reg = &reg;
@@ -300,6 +304,22 @@ bool InstructionFrame::SetInstPntr(Instruction*inst){
     _instPntr = inst;
 
     return true;
+}
+
+MemItem InstructionFrame::Pop(){
+    MemItem mi;
+
+    if (_stackFrame.size() == 0){
+        return mi;
+    }
+
+    mi = _stackFrame[_stackFrame.size()-1];
+    _stackFrame.pop_back();
+    return mi;
+}
+
+void InstructionFrame::Push(MemItem mi){
+    _stackFrame.push_back(mi);
 }
 
 bool InstructionFrame::Ready(){

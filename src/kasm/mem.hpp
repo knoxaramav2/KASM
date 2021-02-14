@@ -80,6 +80,8 @@ namespace KASM{
         ~MemItem();
     };
 
+    //void ClearMemItem(MemItem*);
+
     //Stack frame
     struct Instruction;
     class CallFrame{

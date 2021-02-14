@@ -76,6 +76,7 @@ namespace KASM{
         InstructionProc Proc;
 
         Instruction();
+        ~Instruction();
     };
 
 
@@ -123,7 +124,8 @@ namespace KASM{
 
 
         //runtime
-        std::vector<CallFrame> _frameStack;
+        std::vector<CallFrame> _frameStack;//TODO
+        std::vector<MemItem> _stackFrame;//Better names
         KAsmRegisters * _reg;
         InstructionRegistry _instructions;
 
@@ -151,6 +153,9 @@ namespace KASM{
         KAsmRegisters * GetRegisters();
         InstructionProc GetInstProc(std::string proc);
         bool SetInstPntr(Instruction*);
+
+        MemItem Pop();
+        void Push(MemItem);
 
         bool Ready();
         void SetExit();

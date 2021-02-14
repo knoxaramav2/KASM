@@ -92,7 +92,21 @@ MemItem::MemItem(KASMType type, bool isConst, void*data){
 MemItem::~MemItem(){
 
 }
+/*
+void ClearMemItem(MemItem * mi){
+    if (mi == nullptr || !mi->isConst) {return;}
 
+    switch(mi->type){
+        case KT_INT: delete (int*) mi->data; break;
+        case KT_FLOAT: delete (float*) mi->data; break;
+        case KT_CHAR: delete (char*) mi->data; break;
+        case KT_BYTE: delete (unsigned char*) mi->data; break;
+        case KT_STRING: delete (string*) mi->data; break;
+        default: break;
+    }
+
+    delete mi;
+}*/
 
 CallFrame::CallFrame(){
     Callee = nullptr;
