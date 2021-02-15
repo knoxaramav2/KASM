@@ -1,7 +1,7 @@
 
 CC = g++
 CFLAGS = -std=c++17 -Wall -g
-LFLAGS = -L../bin -lkasm
+LFLAGS = -L../bin -lkasm -lkdraw
 DBGFLAGS = -D__DEBUG
 OUT = dev
 CLEANEXT = o a

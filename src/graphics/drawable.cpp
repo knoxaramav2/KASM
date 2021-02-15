@@ -1,8 +1,13 @@
 #include "drawable.hpp"
 
-using namespace KASM;
+KASM::ErrCode PushWindow(KASM::Instruction* inst, KASM::InstructionFrame* frame){
 
-ErrCode KASM::_pushWindow(Instruction* inst, InstructionFrame*frame){
-    
-    return ERR_OK;
+
+
+    return KASM::ERR_OK;
+}
+
+
+void KASM::InitGraphics(){
+    _pushWindow = &PushWindow;
 }

@@ -23,7 +23,7 @@ else
 	FixPath = $(subst /,\,$1)
 	PLATFORM = -D__WINDOWS
 	OSMODE = -DBITMODE=$(BITVRS)
-	EXT=.dll
+	EXT=.a
 	RUNPATH=$(EXPORT_PATH)$(OUT)$(EXT)
 endif
 

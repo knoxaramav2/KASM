@@ -15,6 +15,8 @@ int main(int argc, char ** argv){
     cout << "Start Test" << endl;
 
     KASM::AsmController controller;
+    KASM::LoadGraphics(controller);
+
     controller.LoadScript(file);
     controller.Run();
 

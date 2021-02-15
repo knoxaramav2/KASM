@@ -2,6 +2,7 @@
 #define KASM_CTRL
 
 #include "ops.hpp"
+
 #include <string>
 
 namespace KASM{

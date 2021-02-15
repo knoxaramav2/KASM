@@ -1,14 +1,15 @@
 
 CC = g++
 CFLAGS = -std=c++17 -Wall -g
-LFLAGS = -lm -ldl -lpthread -L../graphics -lkdraw
+LFLAGS = -lm -ldl -lpthread -L../bin -lkdraw
 OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
 DBGFLAG=-D__DEBUG
 SUBDIRS=
-SRC= defaultInstructions.cpp mem.cpp ops.cpp instructionRegistry.cpp \
-	controller.cpp crossplat.cpp debug.cpp utils.cpp \
+SRC= defaultInstructions.cpp mem.cpp ops.cpp \
+	instructionRegistry.cpp \
+	controller.cpp crossplat.cpp debug.cpp utils.cpp externalLoaders.cpp
 	
 OBJ_FILES = $(SRC:.cpp=.o)
 EXPORT_PATH=../../bin/
@@ -25,17 +26,17 @@ else
 	FixPath = $(subst /,\,$1)
 	PLATFORM = -D__WINDOWS
 	OSMODE = -DBITMODE=$(BITVRS)
-	EXT=.dll
+	EXT=.a
 	RUNPATH=$(EXPORT_PATH)$(OUT)$(EXT)
 endif
 
 export EXT
 
 %.o : %.cpp
-	$(CC) $(CFLAGS) $(LFLAGS) $(DBGFLAG) $(PLATFORM) -c $<
+	$(CC) $(LFLAGS) $(CFLAGS) $(DBGFLAG) $(PLATFORM) -c $<
 
 $(RUNPATH): $(OBJ_FILES)
-	ar rcs $(EXPORT_PATH)$(OUT)$(EXT) $(OBJ_FILES)
+	ar -rcsT ../../bin/libkasm.a $(OBJ_FILES)
 
 .PHONY: rebuild
 rebuild: clean $(RUNPATH)
