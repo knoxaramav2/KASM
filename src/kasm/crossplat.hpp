@@ -11,12 +11,17 @@
 #endif
 
 namespace KASM{
-    class KCompat{
+    namespace KCompat{
+        namespace String{
+            std::string FormatPath(std::string path);
+        }
 
-        public:
-
-        static std::string FormatPath(std::string path);
-
+        namespace Graphics{
+            bool SetCursorXY(int x, int y);
+            bool SetColor(int foreGround, int backGround);
+            bool PlotXY(int x, int y, char c);
+            bool ReizeTerminal(int x, int y);
+        }
     };
 }
 

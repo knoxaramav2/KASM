@@ -16,7 +16,7 @@ AsmController::~AsmController(){
 }
 
 void AsmController::LoadScript(string path){
-    string relPath = KCompat::FormatPath(path);
+    string relPath = KCompat::String::FormatPath(path);
     FileRaw fr(relPath);
     _instFrame.ProcessScripts(fr);
 }

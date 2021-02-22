@@ -197,7 +197,7 @@ void InstructionFrame::ProcessPreProc(string& line){
 
     if (directive == "$import"){
         if (terms.size() == 1){
-            string path = KCompat::FormatPath(terms[0]);
+            string path = KCompat::String::FormatPath(terms[0]);
             FileRaw fr(path);
             ProcessScripts(fr);
         } else {

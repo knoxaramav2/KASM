@@ -9,7 +9,7 @@ DBGFLAG=-D__DEBUG
 OSMODE = -DBITMODE=$(BITVRS)
 CLEANEXT = o a dll exe
 
-FILE = scripts/dev/stack.kasm
+FILE = scripts/dev/graphics.kasm
 
 ifeq ($(shell uname), Linux)
 	PLATFORM = -D__LINUX

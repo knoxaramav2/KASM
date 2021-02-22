@@ -3,6 +3,7 @@
 
 #ifdef __LINUX
     #include <unistd.h>
+    #include <ncurses.h>
 #endif
 #ifdef __WINDOWS
     #include <libloaderapi.h>
@@ -11,7 +12,7 @@
 using namespace std;
 using namespace KASM;
 
-string KCompat::FormatPath(string path){
+string KCompat::String::FormatPath(string path){
 
     string ret;
 
@@ -38,3 +39,35 @@ string KCompat::FormatPath(string path){
 
     return ret+path;
 }
+
+namespace KASM::KCompat::Graphics{
+
+    bool SetCursorXY(int x, int y){
+
+        return 0;
+    }
+
+    bool SetColor(int foreGround, int backGround){
+
+        return 0;
+    }
+
+    bool PlotXY(int x, int y, char c){
+
+        return 0;
+    }
+
+    bool ReizeTerminal(int x, int y){
+
+        return 0;
+    }
+
+}
+
+
+
+
+
+
+
+

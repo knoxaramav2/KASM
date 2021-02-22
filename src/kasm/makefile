@@ -1,7 +1,7 @@
 
 CC = g++
 CFLAGS = -std=c++17 -Wall -g -static
-LFLAGS = -lm -ldl -lpthread -L../bin 
+LFLAGS = -lm -ldl -lpthread -lncurses -L../bin 
 OUT = libkasm
 CLEANEXT = o a
 BITVRS=64

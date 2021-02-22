@@ -1,59 +1,114 @@
 #include "drawable.hpp"
 #include "controller.hpp"
+#include "crossplat.hpp"
 
-KASM::ErrCode PushWindow(KASM::Instruction* inst, KASM::InstructionFrame* frame){
-
-
-
-    return KASM::ERR_OK;
-}
-
-KASM::ErrCode SetXY(KASM::Instruction* inst, KASM::InstructionFrame* frame){
+using namespace KASM;
 
 
+ErrCode CheckIntArgs(Instruction*inst, unsigned argNums){
 
-    return KASM::ERR_OK;
-}
+    for(unsigned i = 0; i < argNums; ++i){
+        
+        MemItem * mi = nullptr;
 
-KASM::ErrCode SetColor(KASM::Instruction* inst, KASM::InstructionFrame* frame){
+        if (i == 0){ mi = inst->Rv0; }
+        else if (i == 1){ mi = inst->Rv1; }
+        else if (i == 2){ mi = inst->Rv2; }
 
+        if (mi == nullptr){
+            return ERR_MISSING_ARG;
+        } else if (mi->type != KASMType::KT_INT){
+            return ERR_ILLEGAL_ARG;
+        }
+    }
 
-
-    return KASM::ERR_OK;
-}
-
-KASM::ErrCode DrawRectagle(KASM::Instruction* inst, KASM::InstructionFrame* frame){
-
-
-
-    return KASM::ERR_OK;
-}
-
-KASM::ErrCode DrawCircle(KASM::Instruction* inst, KASM::InstructionFrame* frame){
-
-
-
-    return KASM::ERR_OK;
-}
-
-KASM::ErrCode PlotAt(KASM::Instruction* inst, KASM::InstructionFrame* frame){
-
-
-
-    return KASM::ERR_OK;
-}
-
-KASM::ErrCode MoveWindow(KASM::Instruction* inst, KASM::InstructionFrame* frame){
-
-
-
-    return KASM::ERR_OK;
+    return ERR_OK;
 }
 
 
+ErrCode PushWindow(Instruction* inst, InstructionFrame* frame){
 
 
-void KASM::GRAPHICS::InitGraphics(KASM::AsmController&ctrl){
+
+    return ERR_OK;
+}
+
+ErrCode SetXY(Instruction* inst, InstructionFrame* frame){
+
+    ErrCode err = CheckIntArgs(inst, 2);
+
+    if (err != ERR_OK) { return err; }
+    int x = *(int *)inst->Rv0->data;
+    int y = *(int *)inst->Rv1->data;
+    
+    if (!KCompat::Graphics::SetCursorXY(x, y)){
+        return ERR_OUT_OF_RANGE;
+    }
+
+    return ERR_OK;
+}
+
+ErrCode SetColor(Instruction* inst, InstructionFrame* frame){
+
+
+
+    return ERR_OK;
+}
+
+ErrCode DrawRectagle(Instruction* inst, InstructionFrame* frame){
+
+
+
+    return ERR_OK;
+}
+
+ErrCode DrawCircle(Instruction* inst, InstructionFrame* frame){
+
+
+
+    return ERR_OK;
+}
+
+ErrCode PlotAt(Instruction* inst, InstructionFrame* frame){
+
+    ErrCode err = CheckIntArgs(inst, 2);
+
+    if (err != ERR_OK) { return err; }
+
+    if (inst->Rv2 == nullptr){
+        return ERR_MISSING_ARG;
+    } else if (inst->Rv2->type != KT_CHAR || inst->Rv2->type != KT_BYTE){
+        return ERR_ILLEGAL_ARG;
+    }
+
+    int x = *(int *)inst->Rv0->data;
+    int y = *(int *)inst->Rv1->data;
+    char c = *(char *)inst->Rv2->data;
+    
+    if (!KCompat::Graphics::PlotXY(x, y, c)){
+        return ERR_OUT_OF_RANGE;
+    }
+
+    return ERR_OK;
+}
+
+ErrCode MoveWindow(Instruction* inst, InstructionFrame* frame){
+
+
+
+    return ERR_OK;
+}
+
+ErrCode SetTerminalSize(Instruction* inst, InstructionFrame* frame){
+
+
+
+    return ERR_OK;
+}
+
+
+
+void GRAPHICS::InitGraphics(AsmController&ctrl){
     ctrl.RegisterCommand("pushxwin", &PushWindow);
     ctrl.RegisterCommand("setxy", &SetXY);
     ctrl.RegisterCommand("setclr", &SetColor);
@@ -61,4 +116,5 @@ void KASM::GRAPHICS::InitGraphics(KASM::AsmController&ctrl){
     ctrl.RegisterCommand("circ", &DrawCircle);
     ctrl.RegisterCommand("plotxy", &PlotAt);
     ctrl.RegisterCommand("mvwin", &MoveWindow);
+    ctrl.RegisterCommand("settrmsz", &SetTerminalSize);
 }

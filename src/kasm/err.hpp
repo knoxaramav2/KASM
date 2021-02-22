@@ -14,6 +14,7 @@ namespace KASM{
         ERR_UNIMPLEMENTED,
         ERR_ILLEGAL_ARG,
         ERR_EMPTY_STACK,
+        ERR_OUT_OF_RANGE,
         
         //Internal errors
         ERR_INTERNAL
