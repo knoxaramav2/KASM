@@ -7,8 +7,6 @@ namespace KASM{
     class AsmController;
 namespace GRAPHICS{
     void InitGraphics(AsmController&);
-    //InstructionProc _pushWindow;
-
 }}
 
 #endif
