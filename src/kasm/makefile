@@ -1,7 +1,7 @@
 
 CC = g++
-CFLAGS = -std=c++17 -Wall -g
-LFLAGS = -lm -ldl -lpthread -L../bin -lkdraw
+CFLAGS = -std=c++17 -Wall -g -static
+LFLAGS = -lm -ldl -lpthread -L../bin 
 OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
@@ -9,7 +9,8 @@ DBGFLAG=-D__DEBUG
 SUBDIRS=
 SRC= defaultInstructions.cpp mem.cpp ops.cpp \
 	instructionRegistry.cpp \
-	controller.cpp crossplat.cpp debug.cpp utils.cpp externalLoaders.cpp
+	controller.cpp crossplat.cpp debug.cpp utils.cpp \
+	drawable.cpp externalLoaders.cpp
 	
 OBJ_FILES = $(SRC:.cpp=.o)
 EXPORT_PATH=../../bin/
@@ -33,10 +34,10 @@ endif
 export EXT
 
 %.o : %.cpp
-	$(CC) $(LFLAGS) $(CFLAGS) $(DBGFLAG) $(PLATFORM) -c $<
+	$(CC) $(LFLAGS) $(CFLAGS) $(DBGFLAG) $(PLATFORM) -c $^
 
 $(RUNPATH): $(OBJ_FILES)
-	ar -rcsT ../../bin/libkasm.a $(OBJ_FILES)
+	ar -rc ../../bin/libkasm$(EXT) $(OBJ_FILES)
 
 .PHONY: rebuild
 rebuild: clean $(RUNPATH)

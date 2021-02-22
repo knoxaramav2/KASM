@@ -1,4 +1,5 @@
 #include "drawable.hpp"
+#include "controller.hpp"
 
 KASM::ErrCode PushWindow(KASM::Instruction* inst, KASM::InstructionFrame* frame){
 
@@ -8,6 +9,6 @@ KASM::ErrCode PushWindow(KASM::Instruction* inst, KASM::InstructionFrame* frame)
 }
 
 
-void KASM::InitGraphics(){
-    _pushWindow = &PushWindow;
+void KASM::GRAPHICS::InitGraphics(KASM::AsmController&ctrl){
+    ctrl.RegisterCommand("pushxwin", &PushWindow);
 }

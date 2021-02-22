@@ -1,6 +1,6 @@
 #compile all
 
-SUBDIRS = src/graphics src/kasm test
+SUBDIRS = src/kasm test
 CLEANDIRS = $(SUBDIRS) bin
 
 #Options to pass
