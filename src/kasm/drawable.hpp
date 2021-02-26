@@ -7,6 +7,7 @@ namespace KASM{
     class AsmController;
 namespace GRAPHICS{
     void InitGraphics(AsmController&);
+    void StartGlobals();
 }}
 
 #endif

@@ -22,7 +22,7 @@ namespace KASM{
             bool PlotXY(int x, int y, char c);
             bool ReizeTerminal(int x, int y);
         }
-    };
+    }
 }
 
 

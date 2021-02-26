@@ -1,9 +1,9 @@
 #include "crossplat.hpp"
 #include "limits.h"
+#include <ncurses.h>
 
 #ifdef __LINUX
     #include <unistd.h>
-    #include <ncurses.h>
 #endif
 #ifdef __WINDOWS
     #include <libloaderapi.h>
@@ -22,7 +22,8 @@ string KCompat::String::FormatPath(string path){
         if (len != -1){
             ret = string(pathBuff);
         }
-    #else
+    #endif
+    #ifdef __WINDOWS
         TCHAR pathBuff[MAX_PATH];
         GetModuleFileName(nullptr, pathBuff, MAX_PATH);
         ret = pathBuff;
@@ -40,34 +41,28 @@ string KCompat::String::FormatPath(string path){
     return ret+path;
 }
 
-namespace KASM::KCompat::Graphics{
+bool KASM::KCompat::Graphics::SetCursorXY(int x, int y){
 
-    bool SetCursorXY(int x, int y){
+    //TODO Mark for linux
+    
 
-        return 0;
-    }
-
-    bool SetColor(int foreGround, int backGround){
-
-        return 0;
-    }
-
-    bool PlotXY(int x, int y, char c){
-
-        return 0;
-    }
-
-    bool ReizeTerminal(int x, int y){
-
-        return 0;
-    }
-
+    return 0;
 }
 
+bool KASM::KCompat::Graphics::SetColor(int foreGround, int backGround){
 
+    return 0;
+}
 
+bool KASM::KCompat::Graphics::PlotXY(int x, int y, char c){
 
+    mvwaddch(nullptr, y, x, c);
+    refresh();
 
+    return 0;
+}
 
+bool KASM::KCompat::Graphics::ReizeTerminal(int x, int y){
 
-
+    return 0;
+}

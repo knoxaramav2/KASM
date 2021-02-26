@@ -7,7 +7,7 @@ OUT = dev
 CLEANEXT = o a
 BITVRS=64
 SRC = launch.cpp
-FILE = scripts/dev/conditionals.kasm
+FILE = scripts/dev/graphics.kasm
 
 ifeq ($(shell uname), Linux)
 	FixPath = $1

@@ -16,11 +16,7 @@ int main(int argc, char ** argv){
 
     KASM::AsmController controller;
     KASM::LoadGraphics(controller);
-
-    controller.LoadScript(file);
-    controller.Run();
-
-    cout << endl << endl << "END" << endl;
+    
 
     return 0;
 }

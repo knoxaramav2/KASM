@@ -1,10 +1,49 @@
 #include "drawable.hpp"
 #include "controller.hpp"
 #include "crossplat.hpp"
+#include "ncurses.h"
 
 using namespace KASM;
 
 
+//Drawable classes/methods
+
+/*
+    Renderable cell
+    character: Printed character
+    attr: binary flags for color, transparency
+*/
+
+struct TCell{
+    char character;
+    unsigned int attr;
+};
+
+class TWindow{
+
+    unsigned _width, _height;
+    unsigned _x, _y;
+
+    public:
+
+    TWindow();
+    ~TWindow();
+
+};
+
+class WindowController{
+
+    public:
+
+};
+
+WindowController _winCtrl;
+
+void GRAPHICS::StartGlobals(){
+
+}
+
+//Helper methods
 ErrCode CheckIntArgs(Instruction*inst, unsigned argNums){
 
     for(unsigned i = 0; i < argNums; ++i){
@@ -26,6 +65,8 @@ ErrCode CheckIntArgs(Instruction*inst, unsigned argNums){
 }
 
 
+
+//Registered methods
 ErrCode PushWindow(Instruction* inst, InstructionFrame* frame){
 
 
@@ -107,8 +148,16 @@ ErrCode SetTerminalSize(Instruction* inst, InstructionFrame* frame){
 }
 
 
+void StartCurses(){
+
+    initscr();
+
+}
 
 void GRAPHICS::InitGraphics(AsmController&ctrl){
+
+    StartCurses();
+
     ctrl.RegisterCommand("pushxwin", &PushWindow);
     ctrl.RegisterCommand("setxy", &SetXY);
     ctrl.RegisterCommand("setclr", &SetColor);
