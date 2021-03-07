@@ -118,7 +118,7 @@ ErrCode PlotAt(Instruction* inst, InstructionFrame* frame){
 
     if (inst->Rv2 == nullptr){
         return ERR_MISSING_ARG;
-    } else if (inst->Rv2->type != KT_CHAR || inst->Rv2->type != KT_BYTE){
+    } else if (inst->Rv2->type != KT_CHAR && inst->Rv2->type != KT_BYTE){
         return ERR_ILLEGAL_ARG;
     }
 

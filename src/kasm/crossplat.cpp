@@ -46,23 +46,22 @@ bool KASM::KCompat::Graphics::SetCursorXY(int x, int y){
     //TODO Mark for linux
     
 
-    return 0;
+    return true;
 }
 
 bool KASM::KCompat::Graphics::SetColor(int foreGround, int backGround){
 
-    return 0;
+    return true;
 }
 
 bool KASM::KCompat::Graphics::PlotXY(int x, int y, char c){
 
-    mvwaddch(nullptr, y, x, c);
+    mvaddch(y, x, c);
     refresh();
-
-    return 0;
+    return true;
 }
 
 bool KASM::KCompat::Graphics::ReizeTerminal(int x, int y){
 
-    return 0;
+    return true;
 }

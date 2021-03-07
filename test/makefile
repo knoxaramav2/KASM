@@ -28,7 +28,7 @@ endif
 
 all:
 	$(CC) $(SRC) $(OSMODE) $(CFLAGS) $(DBGFLAGS) \
-		$(PLATFORM) $(LFLAGS) -o $(RUNPATH)
+		$(PLATFORM) $(LFLAGS) -o $(RUNPATH) -lncurses
 
 .PHONY: run
 run:

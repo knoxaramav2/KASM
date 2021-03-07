@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char ** argv){
 
-    string file = "scripts/dev/caller.kasm";
+    string file = "scripts/dev/graphics.kasm";
 
     if (argc >= 2){
         file = argv[1];
@@ -17,6 +17,8 @@ int main(int argc, char ** argv){
     KASM::AsmController controller;
     KASM::LoadGraphics(controller);
     
+    controller.LoadScript(file);
+    controller.Run();
 
     return 0;
 }

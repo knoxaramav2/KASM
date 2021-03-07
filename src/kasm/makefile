@@ -1,7 +1,7 @@
 
 CC = g++
 CFLAGS = -std=c++17 -Wall -g -static
-LFLAGS = -lm -ldl -lpthread -lncurses -L../bin 
+LFLAGS = -lm -ldl -lpthread -L../bin 
 OUT = libkasm
 CLEANEXT = o a
 BITVRS=64
@@ -34,7 +34,7 @@ endif
 export EXT
 
 %.o : %.cpp
-	$(CC) $(LFLAGS) $(CFLAGS) $(DBGFLAG) $(PLATFORM) -c $^
+	$(CC) $(LFLAGS) $(CFLAGS) $(DBGFLAG) $(PLATFORM) -c $^ -lncurses
 
 $(RUNPATH): $(OBJ_FILES)
 	ar -rc ../../bin/libkasm$(EXT) $(OBJ_FILES)
