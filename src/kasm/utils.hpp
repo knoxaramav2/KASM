@@ -13,12 +13,18 @@ namespace KASM{
 
         public:
 
+        //char
+        static char ToUpper(char);
+        static char ToLower(char);
+
         //string
         static std::vector<std::string> SplitString(std::string line);
         static std::string ToUpper(std::string&);
         static std::string ToUpper(const char[]);
         static std::string ToLower(std::string&);
         static std::string ToLower(const char[]);
+
+        
     };
 }
 

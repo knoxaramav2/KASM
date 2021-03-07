@@ -5,8 +5,10 @@
     exit 0
 
 :start
-    plotxy 2 2 'X'
+
+    plotxy 2 2 55.5
     plotxy 3 3 'Y'
     plotxy 4 4 'Z'
+    
 
     exit 0

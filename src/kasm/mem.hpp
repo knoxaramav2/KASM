@@ -12,6 +12,7 @@ namespace KASM{
         KT_BYTE,    //signed byte
         KT_CHAR,    //unsigned byte
         KT_STRING,
+        
         KT_REF,     //inst ref
         KT_NA,      //illegal
 

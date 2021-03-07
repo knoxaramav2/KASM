@@ -74,17 +74,28 @@ vector<string> Utils::SplitString(string line){
     return ret;
 }
 
+char Utils::ToUpper(char c){
+    if (c>='a' && c<= 'z') {
+        c -= 0x20;
+    }
+
+    return c;
+}
+
+char Utils::ToLower(char c){
+    if (c>='A' && c<= 'Z') {
+        c += 0x20;
+    }
+    
+    return c;
+}
+
 string Utils::ToUpper(const char raw[]){
 
     string ret;
 
     for(size_t i=0; i < strlen(raw); ++i){
-        char c = raw[i];
-        if (c>='a' && c<= 'z') {
-            c -= 0x20;
-        }
-
-        ret += c;
+        ret += ToUpper(raw[i]);
     }
 
     return ret;
@@ -99,12 +110,7 @@ string Utils::ToLower(const char raw[]){
     string ret;
 
     for(size_t i=0; i < strlen(raw); ++i){
-        char c = raw[i];
-        if (c>='A' && c<= 'Z') {
-            c += 0x20;
-        }
-
-        ret += c;
+        ret += ToLower(raw[i]);
     }
 
     return ret;

@@ -17,10 +17,17 @@ namespace KASM{
         }
 
         namespace Graphics{
+
+            enum TerminalAttribute{
+                WIDTH, HEIGHT,
+                XPOS, YPOS
+            };
+
             bool SetCursorXY(int x, int y);
             bool SetColor(int foreGround, int backGround);
-            bool PlotXY(int x, int y, char c);
+            bool PlotXY(int x, int y, std::string str);
             bool ReizeTerminal(int x, int y);
+            int GetTerminalAttribute(TerminalAttribute attr);
         }
     }
 }

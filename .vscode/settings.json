@@ -35,6 +35,7 @@
         "utility": "cpp",
         "typeinfo": "cpp",
         "string": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "xstring": "cpp"
     }
 }

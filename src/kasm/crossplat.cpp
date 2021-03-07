@@ -41,7 +41,7 @@ string KCompat::String::FormatPath(string path){
     return ret+path;
 }
 
-bool KASM::KCompat::Graphics::SetCursorXY(int x, int y){
+bool KCompat::Graphics::SetCursorXY(int x, int y){
 
     //TODO Mark for linux
     
@@ -49,19 +49,27 @@ bool KASM::KCompat::Graphics::SetCursorXY(int x, int y){
     return true;
 }
 
-bool KASM::KCompat::Graphics::SetColor(int foreGround, int backGround){
+bool KCompat::Graphics::SetColor(int foreGround, int backGround){
 
     return true;
 }
 
-bool KASM::KCompat::Graphics::PlotXY(int x, int y, char c){
+bool KCompat::Graphics::PlotXY(int x, int y, string str){
 
-    mvaddch(y, x, c);
+    //mvaddch(y, x, c);
+    mvprintw(y, x, str.c_str());
     refresh();
     return true;
 }
 
-bool KASM::KCompat::Graphics::ReizeTerminal(int x, int y){
+bool KCompat::Graphics::ReizeTerminal(int x, int y){
 
     return true;
+}
+
+int KCompat::Graphics::GetTerminalAttribute(KCompat::Graphics::TerminalAttribute attr){
+
+
+
+    return 0;
 }
