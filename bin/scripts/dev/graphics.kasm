@@ -7,9 +7,10 @@
 :start
 
     #plotxy 0 0 "Enter Text: "
-    mov "Test" RS0
+    #mov "Test" RS0
+    gettrmattr 'x' RI0
     #getl RS0
-    plotxy 2 2 RS0
+    plotxy 2 2 RI0
     plotxy 3 3 'Y'
     plotxy 4 4 'Z'
     

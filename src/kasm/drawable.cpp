@@ -4,6 +4,7 @@
 #include "utils.hpp"
 #include "controller.hpp"
 #include "crossplat.hpp"
+#include "limits.h"
 #include "ncurses.h"
 
 using namespace std;
@@ -193,6 +194,7 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
     if (err) { return err; }
 
     char attrChar = KASM::Utils::ToLower(*(char*) inst->Rv0->data);
+    
     switch(attrChar){
         case 'x': ta = KCompat::Graphics::TerminalAttribute::XPOS; break;
         case 'y': ta = KCompat::Graphics::TerminalAttribute::YPOS; break;
@@ -201,8 +203,8 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
         default: return ErrCode::ERR_ILLEGAL_ARG;
     }
 
-    int val = KCompat::Graphics::GetTerminalAttribute(ta);
-    if (val < 0) { return ErrCode::ERR_OUT_OF_RANGE; }
+    //int val = KCompat::Graphics::GetTerminalAttribute(ta);
+    if (val == INT_MIN) { return ErrCode::ERR_OUT_OF_RANGE; }
 
     *(int*) inst->Rv1->data = val;
     return ErrCode::ERR_OK;

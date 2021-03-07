@@ -1,6 +1,8 @@
 #include "crossplat.hpp"
 #include "limits.h"
+
 #include <ncurses.h>
+#include <stdlib.h>
 
 #ifdef __LINUX
     #include <unistd.h>
@@ -65,11 +67,4 @@ bool KCompat::Graphics::PlotXY(int x, int y, string str){
 bool KCompat::Graphics::ReizeTerminal(int x, int y){
 
     return true;
-}
-
-int KCompat::Graphics::GetTerminalAttribute(KCompat::Graphics::TerminalAttribute attr){
-
-
-
-    return 0;
 }

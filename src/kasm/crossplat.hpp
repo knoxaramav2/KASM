@@ -27,7 +27,6 @@ namespace KASM{
             bool SetColor(int foreGround, int backGround);
             bool PlotXY(int x, int y, std::string str);
             bool ReizeTerminal(int x, int y);
-            int GetTerminalAttribute(TerminalAttribute attr);
         }
     }
 }
