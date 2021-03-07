@@ -209,8 +209,8 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
 }
 
 void StartCurses(){
-
     initscr();
+    keypad(stdscr, TRUE);
 }
 
 void GRAPHICS::InitGraphics(AsmController&ctrl){

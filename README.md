@@ -11,11 +11,10 @@ Linux Support | Priority
 Windows Support | In Progress
 Base Instructions | In Progress
 Call Frames | Done
-Global Stack | In Progress
-Registers | Done
+Global Stack | Done
+Default Registers | Done
 Custom Registers | In Progress
-Function Registration | In Progress
-Heap Memory | Not started
+Function Registration | Done
 ```Graphics Library``` | In Progress
 Special graphics registers | Not started
 Pointer support | Not started
@@ -23,12 +22,15 @@ Keyboard support | In Progress
 Terminal windows | Not Started
 Terminal color | Not Started
 Terminal shapes | Not Started
+Basic Move/Print | In Progress
 ```Audio Library``` | Not Started
 Beep Support | Not Started
 WAV Support | Not Started
 MP3 Support | Not Started
 ```Multithread Support``` | Not started
 Thread Controller | Not Started
+Thread Scheduling | Not Started
+Thread Selector | Not Started
 
 
 ## Compilation:
@@ -70,28 +72,41 @@ Register = rg
 Label = lb
 ? = optional
 
-Instruction | Arg0 | Arg1 | Arg2 | Description
------------ | ---- | ---- | ---- | -----------
-noop        |  |  |  | Placeholder instruction
-mov         | cn/rg| rg | | Copy value to register
-exit        | cn/rg ? | | | Exit program. Optionally set an integer return value. 
-add         | cn/rg | rg | | Add lv to rv register.
-mult        | cn/rg | rg | | Multiply lv to rv register.
-div         | cn/rg | rg | | Divide rv by lv. Store in rv register.
-pow         | cn/rg | rg | | Store rv^lv to rv.
-cmp         | cn/rg | cn/rg | | Supports string. Sets result to CMR register.
-jlss        | lb | | | Jump to label if cmr is < 0.
-jgtr        | lb | | | Jump to label if cmr is > 0.
-jeql        | lb | | | Jump to label if cmr is = 0.
-jneql       | lb | | | Jump to label if cmr is != 0.
-jmp         | lb | | | Jump to label.
-call        | lb | | | Push new call frame and jump to function.
-ret         | cn/rg ? | | | Pop call frame and return to callee. Optional return value.
-push        | cn/rg | | | Push value to stack.
-pop         | rg | | | Pop last stack value and store in register.
-getl        | rg | | | Read user input to string register.
-prnt        | cn/rg
+Instruction | Arg0 | Arg1 | Arg2 | Description | State
+----------- | ---- | ---- | ---- | ----------- | -----
+noop        |  |  |  | Placeholder instruction | Done
+mov         | cn/rg| rg | | Copy value to register | Done
+exit        | cn/rg ? | | | Exit program. Optionally set an integer return value. | Done
+add         | cn/rg | rg | | Add lv to rv register. | Done
+mult        | cn/rg | rg | | Multiply lv to rv register. | Done
+div         | cn/rg | rg | | Divide rv by lv. Store in rv register. | Done
+pow         | cn/rg | rg | | Store rv^lv to rv. | Done
+cmp         | cn/rg | cn/rg | | Supports string. Sets result to CMR register. | Done
+jlss        | lb | | | Jump to label if cmr is < 0. | Done
+jgtr        | lb | | | Jump to label if cmr is > 0. | Done
+jeql        | lb | | | Jump to label if cmr is = 0. | Done
+jneql       | lb | | | Jump to label if cmr is != 0. | Done
+jmp         | lb | | | Jump to label. | Done
+call        | lb | | | Push new call frame and jump to function. | Done
+ret         | cn/rg ? | | | Pop call frame and return to callee. Optional return value. | Done
+push        | cn/rg | | | Push value to stack. | Done
+pop         | rg | | | Pop last stack value and store in register. | Done
+getl        | rg | | | Read user input to string register. | Done
+prnt        | cn/rg | | | | Done
 
+### Terminal Api
+##### * Must call KASM::LoadGraphics
+Instruction | Arg0 | Arg1 | Arg2 | Description | State
+----------- | ---- | ---- | ---- | ----------- | -----
+pushxwin | | | | Create new window | Not Started
+setxy | cn/rg | cn/rg | | Move cursor to X, Y | Done
+setclr | | | | | Not Started
+rect | | | | | Not Started
+circ | | | | | Not Started
+plotxy | cn/rg| cn/rg| cn/rg| Move cursor to X,Y and print| Done
+mvwin | | | | | Not Started
+settrmsz | | | | | Not Started
+gettrmattr | cn/rg| cn/rg| | | Not Started
 
 ### Registers:
 
@@ -153,24 +168,24 @@ bool RegisterInstruction(string instructionName, InstructionProc proc);
 
 ### Example
 ##### Format a function with this signature in your code
-ErrCode _example (Instruction\* inst, InstructionFrame\* frame){
+    ErrCode _example (Instruction\* inst, InstructionFrame\* frame){
 
     MemItem * mi = inst->Rv0;
     MemItem * reg = frame->GetRegisters->GetRegister("ri0");
     if (mi == nullptr) { return ERR_MISSING_ARG;}
     *(int*) reg = *(int *) mi->data;
-
+    
     return ERR_OK;
-}
+    }
 
-//Register function
-KASM::AsmController ctrl;
-ctrl.RegisterFunction("example", _example);
-
-//call custom function from .kasm file
-:start
-    ...
-    example 42 #42 passed to arg0, moved to ri0
-    prnt RI0 #prints 42
-    exit 0
+    //Register function
+    KASM::AsmController ctrl;
+    ctrl.RegisterFunction("example", _example);
+    
+    //call custom function from .kasm file
+    :start
+        ...
+        example 42 #42 passed to arg0, moved to ri0
+        prnt RI0 #prints 42
+        exit 0
 

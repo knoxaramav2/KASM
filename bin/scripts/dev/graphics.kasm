@@ -6,7 +6,10 @@
 
 :start
 
-    plotxy 2 2 55.5
+    #plotxy 0 0 "Enter Text: "
+    mov "Test" RS0
+    #getl RS0
+    plotxy 2 2 RS0
     plotxy 3 3 'Y'
     plotxy 4 4 'Z'
     
