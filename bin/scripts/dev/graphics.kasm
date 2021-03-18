@@ -13,7 +13,7 @@
     plotxy 2 2 RI0
     setclr 3 5 #Yellow magenta
     plotxy 3 3 'Y'
-    setclr 6 6 #Cyan black
+    setclr 0 6 #Black Cyan
     plotxy 4 4 'Z'
     clearclr #white black
     plotxy 5 5 'Q'
