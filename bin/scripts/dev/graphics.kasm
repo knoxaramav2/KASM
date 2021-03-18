@@ -8,11 +8,12 @@
 
     #plotxy 0 0 "Enter Text: "
     #mov "Test" RS0
-    gettrmattr 'x' RI0
+    gettrmattr 'h' RI0
     #getl RS0
     plotxy 2 2 RI0
     plotxy 3 3 'Y'
     plotxy 4 4 'Z'
-    
+    gettrmattr 'x' RI0
+    plotxy 5 5 RI0
 
     exit 0

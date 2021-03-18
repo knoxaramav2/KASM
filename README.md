@@ -3,12 +3,14 @@
 
 A proof of concept library for extendable runtime assembly-like language. Allows for registration of custom functions beyond the base language. See below for base API.
 
+### Note: Windows support currently requires application to be compiled by cygwin. Will support native Windows in the future.
+
 
 ## Roadmap
 Goal | Progress
 ---- | --------
 Linux Support | Priority
-Windows Support | In Progress
+Windows Support | In Progress (requires cygwin/mingw)
 Base Instructions | In Progress
 Call Frames | Done
 Global Stack | Done

@@ -185,7 +185,9 @@ ErrCode SetTerminalSize(Instruction* inst, InstructionFrame* frame){
 ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
 
     ErrCode err = ErrCode::ERR_OK;
-    KCompat::Graphics::TerminalAttribute ta;
+    KCompat::Graphics::TerminalWH ta;
+    KCompat::Graphics::TerminalXY pa;
+    int val = 0;
 
     err = CheckArgInfo(inst->Rv0, KASMType::KT_CHAR);
     if (err) { return err; }
@@ -196,14 +198,19 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
     char attrChar = KASM::Utils::ToLower(*(char*) inst->Rv0->data);
     
     switch(attrChar){
-        case 'x': ta = KCompat::Graphics::TerminalAttribute::XPOS; break;
-        case 'y': ta = KCompat::Graphics::TerminalAttribute::YPOS; break;
-        case 'w': ta = KCompat::Graphics::TerminalAttribute::WIDTH; break;
-        case 'h': ta = KCompat::Graphics::TerminalAttribute::HEIGHT; break;
+        case 'x': pa = KCompat::Graphics::TerminalXY::XPOS; break;
+        case 'y': pa = KCompat::Graphics::TerminalXY::YPOS; break;
+        case 'w': ta = KCompat::Graphics::TerminalWH::WIDTH; break;
+        case 'h': ta = KCompat::Graphics::TerminalWH::HEIGHT; break;
         default: return ErrCode::ERR_ILLEGAL_ARG;
     }
 
-    //int val = KCompat::Graphics::GetTerminalAttribute(ta);
+    if (attrChar == 'x' || attrChar == 'y'){
+        val = KCompat::Graphics::GetCursorXY(pa);
+    } else {
+        val = KCompat::Graphics::GetTerminalAttribute(ta);
+    }
+    
     if (val == INT_MIN) { return ErrCode::ERR_OUT_OF_RANGE; }
 
     *(int*) inst->Rv1->data = val;
