@@ -108,7 +108,7 @@ circ | | | | | Not Started
 plotxy | cn/rg| cn/rg| cn/rg| Move cursor to X,Y and print| Done
 mvwin | | | | | Not Started
 settrmsz | | | | | Not Started
-gettrmattr | cn/rg| cn/rg| | | Not Started
+gettrmattr | cn/rg| cn/rg| | | Done
 
 ### Registers:
 
