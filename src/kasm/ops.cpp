@@ -172,7 +172,7 @@ int InstructionFrame::GetLabel(string& line, int lineNo, FileRaw& raw){
     return 0;
 }
 
-void InstructionFrame::GetInstruction(string& line, FileRaw&src){
+bool InstructionFrame::GetInstruction(string& line, FileRaw&src){
     vector<string> terms = Utils::SplitString(line);
     string com = terms[0];
     terms.erase(terms.begin());
@@ -181,12 +181,18 @@ void InstructionFrame::GetInstruction(string& line, FileRaw&src){
     inst->Source = &src;
     inst->Proc = _instructions.GetInstruction(com);
 
+    if (inst->Proc == nullptr){
+        return false;
+    }
+
     #ifdef __DEBUG
     inst->com = com;
     #endif
 
     ParseArguments(inst, terms);   
     AddInstruction(inst);
+
+    return true;
 }
 
 void InstructionFrame::ProcessPreProc(string& line){
@@ -216,7 +222,7 @@ void InstructionFrame::ProcessInlined(string& line){
     vector<string> terms = Utils::SplitString(line);
 }
 
-void InstructionFrame::ProcessScripts(FileRaw&raw){
+bool InstructionFrame::ProcessScripts(FileRaw&raw){
     _scriptLoad = true;
     ++_scriptLevel;
 
@@ -244,7 +250,13 @@ void InstructionFrame::ProcessScripts(FileRaw&raw){
                 ProcessPreProc(str);
             break;
             case NWS_ID://instruction
-                GetInstruction(str, raw);
+                if (!GetInstruction(str, raw)){
+                    string errLn = "Command not found: ";
+                    errLn += str;
+                    Debug::WriteErr(i, raw.fileName, str, errLn);
+                    _compileSuccess = false;
+                    return false;
+                }
             break;
             case NWS_ILLEGAL://abort, throw error
                 Debug::WriteErr(i, raw.fileName, str, "Illegal character");
@@ -257,6 +269,8 @@ void InstructionFrame::ProcessScripts(FileRaw&raw){
     if (_scriptLevel==0){
         Resolve();
     }
+
+    return true;
 }
 
 void InstructionFrame::AddInstruction(Instruction*inst){
@@ -328,7 +342,7 @@ KASMType InstructionFrame::PeekStack(){
 }
 
 bool InstructionFrame::Ready(){
-    return _scriptLevel==0 && _scriptLoad && _runState==0;
+    return _scriptLevel==0 && _scriptLoad && _runState==0 && _compileSuccess;
 }
 
 void InstructionFrame::SetExit(){

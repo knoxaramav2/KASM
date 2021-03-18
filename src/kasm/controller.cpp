@@ -15,10 +15,12 @@ AsmController::~AsmController(){
 
 }
 
-void AsmController::LoadScript(string path){
+bool AsmController::LoadScript(string path){
     string relPath = KCompat::String::FormatPath(path);
     FileRaw fr(relPath);
     _instFrame.ProcessScripts(fr);
+
+    return _instFrame.Ready();
 }
 
 bool AsmController::RegisterCommand(string name, InstructionProc proc){

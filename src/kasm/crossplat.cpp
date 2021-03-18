@@ -52,7 +52,7 @@ string KCompat::String::FormatPath(string path){
 
 void InitColors(){
     short fg, bg;
-    unsigned short clrPair = 0;
+    int clrPair = 0;
 
     for(fg = 0; fg < 8; ++fg){
         for(bg = 0; bg < 8; ++bg){
@@ -107,14 +107,14 @@ bool KCompat::Graphics::SetColor(int fg, int bg){
 
     if ((fg < 0 || fg >= 8) || 
         (bg < 0 || bg >= 8)) {return false;}
-
+    auto pair = (fg << 4) | bg;
     attron(COLOR_PAIR((fg << 4) | bg));
 
     return true;
 }
 
 void KCompat::Graphics::ClearColor(){
-    attron(0);
+    SetColor(7, 0);
 }
 
 bool KCompat::Graphics::PlotXY(int x, int y, string str){

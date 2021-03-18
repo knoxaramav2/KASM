@@ -107,7 +107,7 @@ ErrCode SetColor(Instruction* inst, InstructionFrame* frame){
     if (err != ERR_OK) return err;
 
     int fg = *(int*) inst->Rv0->data;
-    int bg = *(int*) inst->Rv0->data;
+    int bg = *(int*) inst->Rv1->data;
 
     bool res = KASM::KCompat::Graphics::SetColor(fg, bg);
 

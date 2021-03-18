@@ -5,15 +5,19 @@
     exit 0
 
 :start
-    setclr 0 1
     #plotxy 0 0 "Enter Text: "
     #mov "Test" RS0
     gettrmattr 'h' RI0
     #getl RS0
+    setclr 2 1 #Green red
     plotxy 2 2 RI0
+    setclr 3 5 #Yellow magenta
     plotxy 3 3 'Y'
+    setclr 6 6 #Cyan black
     plotxy 4 4 'Z'
+    clearclr #white black
+    plotxy 5 5 'Q'
     gettrmattr 'x' RI0
-    plotxy 5 5 RI0
+    plotxy 6 6 RI0
 
     exit 0

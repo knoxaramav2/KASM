@@ -17,7 +17,10 @@ int main(int argc, char ** argv){
     KASM::AsmController controller;
     KASM::LoadGraphics(controller);
     
-    controller.LoadScript(file);
+    if (!controller.LoadScript(file)){
+        cout << "Compilation failed." << endl;
+        return -1;
+    }
     controller.Run();
 
     return 0;

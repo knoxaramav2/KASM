@@ -121,6 +121,7 @@ namespace KASM{
         int _runState=0;//0=not start, 1=running, 2=paused, 3=complete, -1=crash
         bool _scriptLoad = false;
         unsigned _scriptLevel = 0;
+        bool _compileSuccess = true;
 
 
         //runtime
@@ -136,14 +137,14 @@ namespace KASM{
         bool Resolve();
 
         int GetLabel(std::string& line, int lineNp, FileRaw&raw);
-        void GetInstruction(std::string& line, FileRaw&raw);
+        bool GetInstruction(std::string& line, FileRaw&raw);
         
         void ProcessPreProc(std::string& line);
         void ProcessInlined(std::string& line);
 
         public:
 
-        void ProcessScripts(FileRaw&raw);
+        bool ProcessScripts(FileRaw&raw);
         InstructionFrame(KAsmRegisters&reg);
         void AddInstruction(Instruction*inst);
 
