@@ -102,7 +102,8 @@ Instruction | Arg0 | Arg1 | Arg2 | Description | State
 ----------- | ---- | ---- | ---- | ----------- | -----
 pushxwin | | | | Create new window | Not Started
 setxy | cn/rg | cn/rg | | Move cursor to X, Y | Done
-setclr | | | | | Not Started
+setclr | | | | | In Progress
+clearclr | | | | | In Progress
 rect | | | | | Not Started
 circ | | | | | Not Started
 plotxy | cn/rg| cn/rg| cn/rg| Move cursor to X,Y and print| Done

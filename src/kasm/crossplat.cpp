@@ -4,6 +4,9 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <iostream>
+#include <bitset>
+#include <string>
 
 #ifdef __LINUX
     #include <unistd.h>
@@ -47,6 +50,25 @@ string KCompat::String::FormatPath(string path){
     return ret+path;
 }
 
+void InitColors(){
+    short fg, bg;
+    unsigned short clrPair = 0;
+
+    for(fg = 0; fg < 8; ++fg){
+        for(bg = 0; bg < 8; ++bg){
+            //++clrPair;
+            clrPair = (fg << 4) | bg;
+            init_pair(clrPair, fg, bg);
+            string s = bitset<8>(clrPair).to_string();
+            cout << "COLOR: " << "fg="<<fg<<" bg="<<bg<<" IDX="<<s<<endl;
+        }
+    }
+}
+
+void KCompat::Graphics::InitTerminalAttr(){
+    InitColors();
+}
+
 //returns false for illegal arguments
 bool KCompat::Graphics::SetCursorXY(int x, int y){
 
@@ -81,9 +103,18 @@ int KCompat::Graphics::GetCursorXY(TerminalXY dim){
     return ret;
 }
 
-bool KCompat::Graphics::SetColor(int foreGround, int backGround){
+bool KCompat::Graphics::SetColor(int fg, int bg){
+
+    if ((fg < 0 || fg >= 8) || 
+        (bg < 0 || bg >= 8)) {return false;}
+
+    attron(COLOR_PAIR((fg << 4) | bg));
 
     return true;
+}
+
+void KCompat::Graphics::ClearColor(){
+    attron(0);
 }
 
 bool KCompat::Graphics::PlotXY(int x, int y, string str){

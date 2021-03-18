@@ -26,9 +26,11 @@ namespace KASM{
                 XPOS, YPOS
             };
 
+            void InitTerminalAttr();
             bool SetCursorXY(int x, int y);
             int GetCursorXY(TerminalXY);
             bool SetColor(int foreGround, int backGround);
+            void ClearColor();
             bool PlotXY(int x, int y, std::string str);
             bool ReizeTerminal(int x, int y);
             int GetTerminalAttribute(TerminalWH ta);

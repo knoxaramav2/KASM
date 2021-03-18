@@ -103,7 +103,20 @@ ErrCode SetXY(Instruction* inst, InstructionFrame* frame){
 
 ErrCode SetColor(Instruction* inst, InstructionFrame* frame){
 
+    ErrCode err = CheckArgsType(inst, KT_INT, 2);
+    if (err != ERR_OK) return err;
 
+    int fg = *(int*) inst->Rv0->data;
+    int bg = *(int*) inst->Rv0->data;
+
+    bool res = KASM::KCompat::Graphics::SetColor(fg, bg);
+
+    return res ? ERR_OK : ERR_OUT_OF_RANGE;
+}
+
+ErrCode ClearColor(Instruction* inst, InstructionFrame* frame){
+
+    KASM::KCompat::Graphics::ClearColor();
 
     return ERR_OK;
 }
@@ -220,15 +233,19 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
 void StartCurses(){
     initscr();
     keypad(stdscr, TRUE);
+    start_color();
+    //init_colorpairs();
 }
 
 void GRAPHICS::InitGraphics(AsmController&ctrl){
 
     StartCurses();
+    KASM::KCompat::Graphics::InitTerminalAttr();
 
     ctrl.RegisterCommand("pushxwin", &PushWindow);
     ctrl.RegisterCommand("setxy", &SetXY);
     ctrl.RegisterCommand("setclr", &SetColor);
+    ctrl.RegisterCommand("clearclr", &ClearColor);
     ctrl.RegisterCommand("rect", &DrawRectagle);
     ctrl.RegisterCommand("circ", &DrawCircle);
     ctrl.RegisterCommand("plotxy", &PlotAt);
