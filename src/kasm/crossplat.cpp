@@ -74,8 +74,8 @@ bool KCompat::Graphics::SetCursorXY(int x, int y){
 
     //TODO Mark for linux
     
-    int w = GetTerminalAttribute(WIDTH);
-    int h = GetTerminalAttribute(HEIGHT);
+    int w = GetTerminalDim(WIDTH);
+    int h = GetTerminalDim(HEIGHT);
 
     if ((x < 0 || y < 0) || (x >= w || h >= y)){
         return false;
@@ -130,7 +130,7 @@ bool KCompat::Graphics::ReizeTerminal(int x, int y){
     return true;
 }
 
-int KCompat::Graphics::GetTerminalAttribute(TerminalWH ta){
+int KCompat::Graphics::GetTerminalDim(TerminalWH ta){
 
     int ret = 0;
     int err = 0;

@@ -5,7 +5,7 @@
 #include "controller.hpp"
 #include "crossplat.hpp"
 #include "limits.h"
-#include "ncurses.h"
+#include <ncurses.h>
 
 using namespace std;
 using namespace KASM;
@@ -221,7 +221,7 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
     if (attrChar == 'x' || attrChar == 'y'){
         val = KCompat::Graphics::GetCursorXY(pa);
     } else {
-        val = KCompat::Graphics::GetTerminalAttribute(ta);
+        val = KCompat::Graphics::GetTerminalDim(ta);
     }
     
     if (val == INT_MIN) { return ErrCode::ERR_OUT_OF_RANGE; }

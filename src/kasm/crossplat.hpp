@@ -26,6 +26,11 @@ namespace KASM{
                 XPOS, YPOS
             };
 
+            enum TerminalFB{
+                FOREGROUND,
+                BACKGROUND
+            };
+
             void InitTerminalAttr();
             bool SetCursorXY(int x, int y);
             int GetCursorXY(TerminalXY);
@@ -33,7 +38,7 @@ namespace KASM{
             void ClearColor();
             bool PlotXY(int x, int y, std::string str);
             bool ReizeTerminal(int x, int y);
-            int GetTerminalAttribute(TerminalWH ta);
+            int GetTerminalDim(TerminalWH ta);
         }
     }
 }
