@@ -107,7 +107,7 @@ bool KCompat::Graphics::SetColor(int fg, int bg){
 
     if ((fg < 0 || fg >= 8) || 
         (bg < 0 || bg >= 8)) {return false;}
-    auto pair = (fg << 4) | bg;
+    //auto pair = (fg << 4) | bg;
     attron(COLOR_PAIR((fg << 4) | bg));
 
     return true;

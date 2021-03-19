@@ -3,6 +3,8 @@
 
 #include "../kasm/procdefs.hpp"
 
+#include <ncurses.h>
+
 namespace KASM{
     class AsmController;
 namespace GRAPHICS{
