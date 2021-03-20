@@ -41,6 +41,7 @@ namespace KASM{
         //Stack
         KT_PUSH,    //push
         KT_POP,     //pop
+        KT_GSA,     //gsa
 
         //High level
         KT_GETL,    //getl
@@ -158,6 +159,7 @@ namespace KASM{
         MemItem PopStack();
         void PushStack(MemItem);
         KASMType PeekStack();
+        MemItem * StackFromTop(int idx);
 
         bool Ready();
         void SetExit();

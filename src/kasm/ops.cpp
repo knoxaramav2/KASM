@@ -11,6 +11,7 @@
 using namespace std;
 using namespace KASM;
 
+//Identifier for line type
 enum CharIndic{
     //Skip line
     NWS_None,       //(all ws)
@@ -92,6 +93,103 @@ InstructionFrame::InstructionFrame(KAsmRegisters&reg){
     _base = _instPntr = nullptr;
 }
 
+MemItem * GrabValue(string&str, KAsmRegisters*reg){
+
+    MemItem * ret = nullptr;
+
+    if (Utils::IsNumeric(str)){
+        ret = new MemItem();
+        ret->type = KASMType::KT_INT;
+        ret->isConst = true;
+        ret->data = new int(0);
+        *(int*)ret->data = atoi(str.c_str());
+    } else {
+        ret = reg->GetRegister(str);
+    }
+
+    return ret;
+}
+
+ErrCode GetStackAt(std::vector<MemItem>& _stackFrame, InstructionFrame * frame, string& arg){
+
+    string substr = arg.substr(1, arg.length()-2);
+    if (substr == "") {return ERR_MISSING_ARG;}
+
+    string raw;
+    vector<string> terms;
+    size_t last = 0;
+
+    //Parse offset terms
+    for(size_t i=0; i <= substr.size(); ++i){
+        if (substr[i] == '+' || substr[i] == '-' || substr[i] == 0){
+            raw = substr.substr(last, i);
+            terms.push_back(raw);
+            last = i + 1;
+
+            if (substr[i] == 0) {break;}
+
+            terms.push_back(string(1, substr[i]));
+            last = i+1;
+        }
+    }
+
+    //Calculate offset
+    bool add = 0;
+
+    //Must have odd num of terms
+    if (terms.size() % 2 == 0){
+        return ERR_MISSING_ARG;
+    }
+
+    MemItem * tmp = nullptr;
+    Instruction * inst = nullptr;
+
+    MemItem * offreg = frame->GetRegisters()->GetRegister("off");
+    tmp = GrabValue(terms[0], frame->GetRegisters());
+    inst = new Instruction();
+    inst->OpCode = KASMOp::KT_MOV;
+    inst->Rv0 = tmp;
+    inst->Rv1 = offreg;
+    inst->Proc = frame->GetInstProc("mov");
+    frame->AddInstruction(inst);
+
+    for (size_t i = 1; i < terms.size(); ++i){
+        string term = terms[i];
+        if (i % 2 == 1){
+            if (term == "+") {add = true;}
+            else if (term == "-") {add = false;}
+            else {
+                //TODO throw error
+            }
+
+
+        } else {
+            tmp = GrabValue(term, frame->GetRegisters());
+
+            if (!add){
+                *(int*)tmp->data = -*(int*)tmp->data;
+            }
+
+            inst = new Instruction();
+            inst->OpCode = KT_ADD;
+            inst->Rv0 = tmp;
+            inst->Rv1 = offreg;
+            inst->Proc = frame->GetInstProc("add");
+            frame->AddInstruction(inst);
+        }
+    }
+
+    //replace offset register value with value at stack offset
+    inst = new Instruction();
+    inst->OpCode = KT_GSA;
+    inst->Rv0 = offreg;
+    inst->Rv1 = offreg;
+    inst->Proc = frame->GetInstProc("gsa");
+    frame->AddInstruction(inst);
+
+    return ERR_OK;
+}
+
 bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
 
     for(size_t i = 0; i < args.size(); ++i){
@@ -127,6 +225,10 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
             item->isConst = true;
             item->type = KT_REF;
             _labelTable.AddTmpJmpInst(str, inst);
+        } else if (first=='['){
+            delete item;
+            GetStackAt(_stackFrame, this, str);
+            item = _reg->GetRegister("off");
         }
 
         if (inst->Rv0 == nullptr){
@@ -339,6 +441,15 @@ void InstructionFrame::PushStack(MemItem mi){
 KASMType InstructionFrame::PeekStack(){
     if (_stackFrame.size() == 0) {return KT_NA;}
     return _stackFrame[_stackFrame.size()-1].type;
+}
+
+MemItem * InstructionFrame::StackFromTop(int idx){
+
+    if (idx < 0 || (size_t) idx >= _stackFrame.size()){
+        return nullptr;
+    }
+
+    return &_stackFrame[_stackFrame.size()-idx-1];
 }
 
 bool InstructionFrame::Ready(){

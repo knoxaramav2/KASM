@@ -130,7 +130,11 @@ ErrCode DrawRectagle(Instruction* inst, InstructionFrame* frame){
 
 ErrCode DrawCircle(Instruction* inst, InstructionFrame* frame){
 
+    ErrCode err = CheckArgsType(inst, KT_INT, 2);
+    if (err != ERR_OK) return err;
 
+    //int fg = *(int*) inst->Rv0->data;
+    //int bg = *(int*) inst->Rv1->data;
 
     return ERR_OK;
 }
@@ -180,14 +184,6 @@ ErrCode PlotAt(Instruction* inst, InstructionFrame* frame){
     return ERR_OK;
 }
 
-
-ErrCode MoveWindow(Instruction* inst, InstructionFrame* frame){
-
-
-
-    return ERR_OK;
-}
-
 ErrCode SetTerminalSize(Instruction* inst, InstructionFrame* frame){
 
 
@@ -230,10 +226,44 @@ ErrCode GetTerminalAttribute(Instruction* inst, InstructionFrame* frame){
     return ErrCode::ERR_OK;
 }
 
+//Window operations
+ErrCode CreateWindow(Instruction* inst, InstructionFrame* frame){
+
+    return ERR_OK;
+}
+
+ErrCode MoveWindow(Instruction* inst, InstructionFrame* frame){
+
+    return ERR_OK;
+}
+
+ErrCode SelectWindow(Instruction* inst, InstructionFrame* frame){
+
+    return ERR_OK;
+}
+
+ErrCode DestroyWindow(Instruction* inst, InstructionFrame* frame){
+
+    return ERR_OK;
+}
+
+ErrCode MoveWinUp(Instruction* inst, InstructionFrame* frame){
+
+    return ERR_OK;
+}
+
+ErrCode MoveWinDown(Instruction* inst, InstructionFrame* frame){
+
+    return ERR_OK;
+}
+
+
 void StartCurses(){
     initscr();
     keypad(stdscr, TRUE);
     start_color();
+    noecho();
+    clear();
     //init_colorpairs();
 }
 

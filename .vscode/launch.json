@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/dev",
-            "args": ["scripts/dev/graphics.kasm"],
+            "args": ["scripts/dev/stack.kasm"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

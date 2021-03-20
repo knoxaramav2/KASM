@@ -1,12 +1,25 @@
 #test passing args by stack
 
+:indextest
+    push 5
+    push 7
+    push 9
+    mov 2 ri0
+    mov [ri0] ri2 #mov esp+2 from top of stack to ri2 (5)
+
+    ret
+
 :start
-    mov 5 ri0
-    mov 6.7 rf0
-    push ri0
-    push rf0
-    call :fnc
-    prnt rfr
+    #mov 5 ri0
+    #mov 6.7 rf0
+    #push ri0
+    #push rf0
+    #call :fnc
+    #prnt rfr
+
+    call :indextest
+    prnt ri2
+
     exit 0
 
 #C equivalent

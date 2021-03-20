@@ -16,7 +16,6 @@ string extractString(string& raw, size_t& start, size_t end){
 //split by whitespace
 vector<string> Utils::SplitString(string line){
 
-
     vector<string> ret;
     size_t idx = 0;
     size_t len = line.size();
@@ -118,4 +117,21 @@ string Utils::ToLower(const char raw[]){
 
 string Utils::ToLower(string&raw){
     return Utils::ToLower(raw.c_str());
+}
+
+bool Utils::IsNumeric(string&raw){
+
+    bool deci = false;
+
+    for(size_t i=0; i < raw.size(); ++i){
+        char c = raw[i];
+
+        if (c < '0' || c > '9') {return false;}
+        if (c == '.'){
+            if (deci) {return false;}
+            deci = true;
+        }
+    }
+
+    return true;
 }

@@ -457,6 +457,31 @@ ErrCode _pop (Instruction*inst, InstructionFrame*frame){
     return ERR_OK;
 }
 
+//TODO may leak memory
+ErrCode _getstackat(Instruction*inst, InstructionFrame*frame){
+
+    if (inst->Rv0 == nullptr ||
+        inst->Rv1 == nullptr){
+            return ERR_MISSING_ARG;
+        }
+
+    if (inst->Rv0->type != KT_INT){
+        return ERR_TYPE_MISMATCH;
+    }
+
+    if (inst->Rv1->isConst){
+        return ERR_ILLEGAL_ARG;
+    }
+
+    int idx = *(int*) inst->Rv0->data;
+    MemItem * mem = frame->StackFromTop(idx);
+    inst->Rv0 = mem;
+
+    _mov(inst, frame);
+
+    return ERR_OK;
+}
+
 //High level
 
 ErrCode _getl (Instruction*inst, InstructionFrame*frame){
@@ -509,6 +534,13 @@ ErrCode _clr (Instruction*inst, InstructionFrame*frame){
     return ERR_UNIMPLEMENTED;
 }
 
+ErrCode _getStack(Instruction*inst, InstructionFrame*frame){
+
+    
+
+    return ERR_OK;
+}
+
 //default instructions
 void KASM::InitInstructionPntrs(InstructionRegistry* reg){
     reg->RegisterInstruction("noop", _noOp);
@@ -534,6 +566,7 @@ void KASM::InitInstructionPntrs(InstructionRegistry* reg){
 
     reg->RegisterInstruction("push", _push);
     reg->RegisterInstruction("pop", _pop);
+    reg->RegisterInstruction("gsa", _getstackat);
 
     reg->RegisterInstruction("getl", _getl);
     reg->RegisterInstruction("prnt", _prnt);

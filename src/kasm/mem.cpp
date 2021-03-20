@@ -61,6 +61,8 @@ void KAsmRegisters::LoadRegisters(){
     _registers["rbr"] = new MemItem(KT_BYTE, false, new char(0));
     _registers["ctr"] = new MemItem(KT_INT, false, new int(0));
     _registers["cmr"] = new MemItem(KT_INT, false, new int(0));
+
+    _registers["off"] = new MemItem(KT_INT, false, new int(0));
 }
 
 void * KAsmRegisters::GetValue(string& reg){

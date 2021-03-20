@@ -12,6 +12,7 @@ namespace KASM{
         KT_BYTE,    //signed byte
         KT_CHAR,    //unsigned byte
         KT_STRING,
+        KT_WIN,     //window for graphics
         
         KT_REF,     //inst ref
         KT_NA,      //illegal
@@ -66,6 +67,8 @@ namespace KASM{
         KT_RBR,     //byte return
         KT_CTR,     //instruction counter,
         KT_CMR,     //compare result
+
+        KT_OFF,     //offset register (internal)
 
         //End
         KT_REG_CAP  //Not a register

@@ -24,7 +24,7 @@ namespace KASM{
         static std::string ToLower(std::string&);
         static std::string ToLower(const char[]);
 
-        
+        static bool IsNumeric(std::string&raw);
     };
 }
 
