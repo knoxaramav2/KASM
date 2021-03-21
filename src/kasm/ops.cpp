@@ -126,7 +126,7 @@ ErrCode GetStackAt(std::vector<MemItem>& _stackFrame, InstructionFrame * frame, 
             terms.push_back(raw);
             last = i + 1;
 
-            if (substr[i] == 0) {break;}
+            if (substr[i] == 0) { break; }
 
             terms.push_back(string(1, substr[i]));
             last = i+1;
@@ -146,6 +146,7 @@ ErrCode GetStackAt(std::vector<MemItem>& _stackFrame, InstructionFrame * frame, 
 
     MemItem * offreg = frame->GetRegisters()->GetRegister("off");
     tmp = GrabValue(terms[0], frame->GetRegisters());
+    if (tmp == nullptr) { return ERR_REGISTER_NOT_FOUND; }
     inst = new Instruction();
     inst->OpCode = KASMOp::KT_MOV;
     inst->Rv0 = tmp;
@@ -159,7 +160,7 @@ ErrCode GetStackAt(std::vector<MemItem>& _stackFrame, InstructionFrame * frame, 
             if (term == "+") {add = true;}
             else if (term == "-") {add = false;}
             else {
-                //TODO throw error
+                return ERR_ILLEGAL_SYNTAX;
             }
 
 
@@ -191,6 +192,8 @@ ErrCode GetStackAt(std::vector<MemItem>& _stackFrame, InstructionFrame * frame, 
 }
 
 bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
+
+    bool success = true;
 
     for(size_t i = 0; i < args.size(); ++i){
         string str = args[i];
@@ -227,7 +230,7 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
             _labelTable.AddTmpJmpInst(str, inst);
         } else if (first=='['){
             delete item;
-            GetStackAt(_stackFrame, this, str);
+            if (GetStackAt(_stackFrame, this, str) != ERR_OK) { success = false; }
             item = _reg->GetRegister("off");
         }
 
@@ -242,7 +245,7 @@ bool InstructionFrame::ParseArguments(Instruction* inst, vector<string>& args){
         }
     }
 
-    return true;
+    return success;
 }
 
 bool InstructionFrame::Resolve(){
@@ -291,8 +294,11 @@ bool InstructionFrame::GetInstruction(string& line, FileRaw&src){
     inst->com = com;
     #endif
 
-    ParseArguments(inst, terms);   
-    AddInstruction(inst);
+    if (!ParseArguments(inst, terms)){
+        AddInstruction(inst);
+    } else {    
+        return false;
+    }
 
     return true;
 }
